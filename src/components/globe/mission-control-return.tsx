@@ -14,11 +14,22 @@ const LandingScene = dynamic(
 
 // Small framed avatar pinned to the orbit screen's top-left corner. Acts as the
 // link back to the landing "mission control" modal.
-export function MissionControlReturn() {
+export function MissionControlReturn({
+  onReturn,
+}: {
+  onReturn?: () => void;
+}) {
   return (
     <Link
       href="/"
       aria-label="Return to mission control"
+      onClick={(e) => {
+        // Let the scene play the reverse "pan back" transition before routing.
+        if (onReturn && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+          e.preventDefault();
+          onReturn();
+        }
+      }}
       className="group absolute left-5 top-5 z-[55] flex items-center gap-3"
     >
       <div

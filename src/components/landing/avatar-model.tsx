@@ -8,6 +8,7 @@ import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.j
 
 export const MODEL_IDLE_URL = "/me/model-idle.glb";
 export const MODEL_RUN_URL = "/me/model-run.glb";
+export const MODEL_DANCE_URL = "/me/model-dance.glb";
 // How long the turntable stays paused after the user lets go of a drag.
 const RESUME_DELAY_MS = 1500;
 
@@ -21,7 +22,7 @@ export function AvatarModel({ url }: { url: string }) {
   const gl = useThree((state) => state.gl);
   const { scene, animations } = useGLTF(url);
 
-  const { object, scale } = useMemo(() => {
+  const { object, scale, centerY } = useMemo(() => {
     // SkeletonUtils.clone correctly rebinds skinned meshes to a cloned
     // skeleton (THREE's Object3D.clone does not), so the mesh renders.
     const obj = cloneSkeleton(scene);
@@ -46,24 +47,42 @@ export function AvatarModel({ url }: { url: string }) {
     const center = new THREE.Vector3();
     box.getSize(size);
     box.getCenter(center);
-    obj.position.sub(center); // recenter geometry around the origin
+    obj.position.set(-center.x, -center.y, -center.z); // initial bind-pose center
     // Frame by height so a wide running pose fills the viewport like the
     // standing idle pose (limb spread no longer shrinks the figure).
     const height = size.y || 1;
     const target = 3.0; // full-body figure framed within the viewport
-    return { object: obj, scale: target / height };
+    return { object: obj, scale: target / height, centerY: center.y };
   }, [scene]);
 
-  const { actions, names } = useAnimations(animations, object);
+  const { actions, names, mixer } = useAnimations(animations, object);
 
   useEffect(() => {
     const action = names.length ? actions[names[0]] : undefined;
     if (!action) return;
     action.reset().fadeIn(0.4).play();
+
+    // Recenter the spin axis on the *posed* skeleton. The baked animation can
+    // translate the Hips sideways (Avaturn's "Pose1" shifts X by ~0.23), so
+    // centering on the bind pose leaves the figure orbiting a point off to its
+    // side. Apply the pose, then pin the Hips X/Z to the origin; keep the
+    // bind-pose vertical center for stable framing.
+    const hips = object.getObjectByName("Hips");
+    if (hips) {
+      mixer.update(0); // flush the pose so bone transforms are current
+      object.updateWorldMatrix(true, true);
+      const hipsWorld = new THREE.Vector3().setFromMatrixPosition(hips.matrixWorld);
+      // Express the Hips in the model's own local frame so the offset is
+      // independent of the outer spin/scale groups.
+      const inv = new THREE.Matrix4().copy(object.matrixWorld).invert();
+      const hipsLocal = hipsWorld.applyMatrix4(inv);
+      object.position.set(-hipsLocal.x, -centerY, -hipsLocal.z);
+    }
+
     return () => {
       action.fadeOut(0.2);
     };
-  }, [actions, names]);
+  }, [actions, names, object, mixer, centerY]);
 
   // Pause the auto-spin while the user is dragging (and for a moment after).
   useEffect(() => {
@@ -101,3 +120,4 @@ export function AvatarModel({ url }: { url: string }) {
 
 useGLTF.preload(MODEL_IDLE_URL);
 useGLTF.preload(MODEL_RUN_URL);
+useGLTF.preload(MODEL_DANCE_URL);

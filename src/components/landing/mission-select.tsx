@@ -5,15 +5,30 @@ import Link from "next/link";
 import { categoryColor } from "@/components/globe/orbits";
 import { MISSIONS } from "./landing-data";
 
-export function MissionSelect() {
+export type MissionLaunch = { href: string; label: string; color: string };
+
+export function MissionSelect({
+  onLaunch,
+}: {
+  onLaunch?: (mission: MissionLaunch) => void;
+}) {
   return (
     <div className="flex flex-col gap-2.5">
       {MISSIONS.map((mission, i) => {
         const color = categoryColor(mission.key);
+        const href = `/orbit?focus=${mission.key}`;
         return (
           <Link
             key={mission.key}
-            href={`/orbit?focus=${mission.key}`}
+            href={href}
+            onClick={(e) => {
+              // Let the parent play the "pivot to orbit" transition before
+              // navigating. Modifier-clicks / middle-clicks keep native behavior.
+              if (onLaunch && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) {
+                e.preventDefault();
+                onLaunch({ href, label: mission.label, color });
+              }
+            }}
             className="mission-card group flex items-center gap-4 rounded-lg p-3.5 text-left backdrop-blur-sm"
             style={{ "--c": color } as React.CSSProperties}
           >

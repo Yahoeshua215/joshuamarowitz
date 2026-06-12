@@ -577,6 +577,332 @@ details[open] .chevron {
   }
 }
 
+/* ============================================================
+   Side rails — instrumentation flanking the HUD panel. They sit
+   just outside the left/right edges but read as part of the unit
+   (a connector ties each into the panel's center).
+   ============================================================ */
+.side-rail-scan {
+  animation: side-rail-scan 6s ease-in-out infinite;
+}
+
+@keyframes side-rail-scan {
+  0% {
+    top: 4%;
+    opacity: 0;
+  }
+  12%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    top: 96%;
+    opacity: 0;
+  }
+}
+
+.side-rail-node {
+  animation: side-rail-node 3.4s ease-in-out infinite;
+}
+
+@keyframes side-rail-node {
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(94, 224, 200, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(94, 224, 200, 0.85);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-rail-scan,
+  .side-rail-node {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Launch transition (mission select → globe), in two halves
+   joined by a dark beat:
+     1. Landing — the mission-control panel turns and pans off
+        to the left of the frame (camera pans sideways off it).
+     2. Orbit — the REAL globe (with its satellites) rotates in
+        from the right as the curtain lifts.
+   The sideways motion is continuous across the page change.
+   ============================================================ */
+.pivot-stage,
+.pivot-world {
+  position: absolute;
+  inset: 0;
+}
+
+/* Oversized so the parallax drift never exposes an empty edge. */
+.pivot-backdrop {
+  position: absolute;
+  inset: -12%;
+}
+
+/* The starfield drifts the same way the panel pans (slower — it's distant),
+   so it reads as the camera actually panning through space. */
+.is-launching .pivot-backdrop {
+  will-change: transform;
+  animation: pivot-backdrop-out 1200ms cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+@keyframes pivot-backdrop-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-9%);
+  }
+}
+
+/* Returning: the panel pans back in from the left, stars drift right to rest. */
+.is-returning .pivot-backdrop {
+  will-change: transform;
+  animation: pivot-backdrop-in 1000ms cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes pivot-backdrop-in {
+  0% {
+    transform: translateX(-9%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* The panel turns away and pans off the left edge of the screen. */
+.is-launching .pivot-front {
+  pointer-events: none;
+  transform-origin: 40% 50%;
+  will-change: transform, opacity;
+  animation: pivot-front-out 1200ms cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+@keyframes pivot-front-out {
+  0% {
+    transform: perspective(1300px) translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    /* Slides off left, left edge toward viewer / right edge away — the
+       skew that reads as the viewer turning. */
+    transform: perspective(1300px) translateX(-80%) rotateY(58deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* Reverse: returning from orbit, the panel pans back IN from the left
+   (the exit played backwards) while the starfield stays put. */
+.is-returning .pivot-front {
+  transform-origin: 40% 50%;
+  will-change: transform, opacity;
+  animation: pivot-front-in 1000ms cubic-bezier(0.2, 0, 0.2, 1) forwards;
+}
+
+@keyframes pivot-front-in {
+  0% {
+    transform: perspective(1300px) translateX(-80%) rotateY(58deg) scale(0.9);
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1300px) translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Flat overlay above the panel: eases to the orbit color before the
+   route swap, plus a small status readout. */
+.pivot-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pivot-flash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: pivot-flash 1200ms ease-in forwards;
+}
+
+@keyframes pivot-flash {
+  0%,
+  82% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.pivot-hud {
+  position: absolute;
+  left: 50%;
+  bottom: 15%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  animation: pivot-hud-in 1200ms ease-out forwards;
+}
+
+.pivot-hud strong {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.pivot-hud-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+}
+
+@keyframes pivot-hud-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  45% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -4px);
+  }
+}
+
+/* Orbit page curtain — holds the dark backdrop over the canvas + HUD
+   until the globe's textures are actually loaded, hiding the loader
+   and the un-textured "first frame" pop. Lifts once ready. */
+.orbit-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: #05070d;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 650ms ease-out;
+}
+
+.orbit-curtain.is-clear {
+  opacity: 0;
+}
+
+/* Persistent starfield behind the orbit scene — hidden under the opaque
+   canvas in normal use, revealed when the scene pans away on return.
+   Oversized so its parallax drift never exposes an empty edge. */
+.orbit-stars {
+  position: absolute;
+  inset: -12%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* As the scene pans off to the right, the revealed stars drift right too
+   (slower), so the return reads as a real camera pan, not a static field. */
+.orbit-stars.is-returning-out {
+  will-change: transform;
+  animation: orbit-stars-out 900ms cubic-bezier(0.5, 0, 0.75, 0.4) forwards;
+}
+
+@keyframes orbit-stars-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(9%);
+  }
+}
+
+/* Wraps the globe + HUD so they pan off to the right together on return,
+   mirroring the panel's left-exit (right edge toward viewer). */
+.orbit-scene {
+  position: absolute;
+  inset: 0;
+  transform-origin: 60% 50%;
+}
+
+.orbit-scene.is-returning-out {
+  will-change: transform, opacity;
+  animation: orbit-exit 900ms cubic-bezier(0.5, 0, 0.75, 0.4) forwards;
+}
+
+@keyframes orbit-exit {
+  0% {
+    transform: perspective(1300px) translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1300px) translateX(80%) rotateY(-58deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+/* The real globe + satellites rotate in from the right once the scene is
+   ready — the continuation of the panel panning off to the left. */
+.orbit-rise {
+  position: absolute;
+  inset: 0;
+  transform-origin: 130% 50%;
+}
+
+.orbit-rise.is-rising {
+  animation: orbit-rise 1100ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
+@keyframes orbit-rise {
+  0% {
+    /* Mirrors the panel's exit: enters from the right with its right edge
+       toward the viewer, settling square — same turning sense. */
+    transform: perspective(1300px) translateX(28%) rotateY(-30deg) scale(0.95);
+  }
+  100% {
+    transform: perspective(1300px) translateX(0) rotateY(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-launching .pivot-front,
+  .is-launching .pivot-backdrop,
+  .is-returning .pivot-front,
+  .is-returning .pivot-backdrop,
+  .pivot-flash,
+  .pivot-hud,
+  .orbit-rise.is-rising,
+  .orbit-scene.is-returning-out,
+  .orbit-stars.is-returning-out {
+    animation: none;
+  }
+  .orbit-curtain {
+    transition: none;
+  }
+}
+
 /* ── Satellite dot field: leader line + extended label on hover ───────────── */
 .sat-leader {
   display: flex;

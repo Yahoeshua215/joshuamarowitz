@@ -93,6 +93,12 @@ export const NAME = "Joshua Marowitz";
 export const ROLE = "Staff Product Designer · AI Practitioner";
 export const CURRENT = "currently at onesignal.com";
 
+// External profile links.
+// LinkedIn lives in the home HUD header; Dribbble surfaces in the orbit view
+// when focused on the OneSignal product-release work.
+export const LINKEDIN_URL = "https://www.linkedin.com/in/joshua-marowitz-59338389/";
+export const DRIBBBLE_URL = "https://dribbble.com/jmaro/shots";
+
 // Proficiency bars (bottom-left "system stats")
 export type CoreStat = { label: string; value: number };
 export const CORE_STATS: CoreStat[] = [
