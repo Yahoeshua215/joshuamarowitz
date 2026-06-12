@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
 
-export const MODEL_IDLE_URL = "/me/model-idle.glb";
+export const MODEL_IDLE_URL = "/me/super-josh.glb";
 export const MODEL_RUN_URL = "/me/model-run.glb";
 export const MODEL_DANCE_URL = "/me/model-dance.glb";
 // How long the turntable stays paused after the user lets go of a drag.
