@@ -1,0 +1,6 @@
+<svg width="1280" height="800" viewBox="0 0 1280 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="800" fill="#161616"/>
+  <rect x="80" y="80" width="1120" height="640" rx="16" stroke="#262626" stroke-width="2" fill="#0f0f0f"/>
+  <text x="640" y="390" text-anchor="middle" fill="#8a8a8a" font-family="system-ui, sans-serif" font-size="28">Preview coming soon</text>
+  <text x="640" y="430" text-anchor="middle" fill="#6b6b6b" font-family="system-ui, sans-serif" font-size="16">Add screenshots via admin</text>
+</svg>

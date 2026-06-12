@@ -1,0 +1,21 @@
+{
+  "slug": "data-warehouse-export",
+  "title": "Data Warehouse Export",
+  "category": "onesignal-work",
+  "tags": [
+    "Integrations",
+    "UX Design",
+    "Data",
+    "Fivetran"
+  ],
+  "dateStart": "2024-02-01",
+  "dateEnd": "2024-02-28",
+  "summary": "Let customers export OneSignal data to their warehouse via Fivetran-powered connectors.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/Z4uEjL7e"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

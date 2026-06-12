@@ -1,0 +1,24 @@
+{
+  "slug": "dashboard-template",
+  "title": "Dashboard Template Sandbox",
+  "category": "personal",
+  "tags": [
+    "React",
+    "Vite",
+    "Tailwind",
+    "Dashboard"
+  ],
+  "dateStart": "2026-01-20",
+  "dateEnd": "2026-05-21",
+  "summary": "Minimal production-ready dashboard boilerplate built with React, Vite, and Tailwind CSS for rapid UI prototyping.",
+  "status": "shipped",
+  "images": [
+    {
+      "src": "/projects/dashboard-template/screenshot.png",
+      "alt": "Dashboard Template Sandbox screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/dashboard-template-sandbox"
+}

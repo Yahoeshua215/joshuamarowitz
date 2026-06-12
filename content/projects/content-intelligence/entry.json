@@ -1,0 +1,25 @@
+{
+  "slug": "content-intelligence",
+  "title": "Content Intelligence Platform",
+  "category": "onesignal",
+  "tags": [
+    "AI",
+    "Analytics",
+    "Content",
+    "Supabase"
+  ],
+  "dateStart": "2025-03-11",
+  "dateEnd": "2025-03-11",
+  "summary": "A marketing-message analysis platform that clusters and optimizes copy with OpenAI, surfaces performance patterns in OneSignal-inspired dashboards, and includes an AI assistant side panel.",
+  "status": "prototype",
+  "links": {},
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Content Intelligence Platform preview"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Content-Intell"
+}

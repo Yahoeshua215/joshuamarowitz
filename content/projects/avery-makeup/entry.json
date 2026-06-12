@@ -1,0 +1,26 @@
+{
+  "slug": "avery-makeup",
+  "title": "Avery Makeup Studio",
+  "category": "personal",
+  "tags": [
+    "iOS",
+    "SwiftUI",
+    "Vision",
+    "Core Image",
+    "Kids"
+  ],
+  "dateStart": "2025-03-02",
+  "dateEnd": "2026-03-18",
+  "summary": "A playful iOS app that lets kids apply virtual makeup to photos — using the Vision framework to detect facial landmarks and Core Image to paint on blush, lipstick, eyeshadow, mascara, and hair color with adjustable color and intensity.",
+  "status": "prototype",
+  "links": {},
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Avery Makeup Studio preview"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Avery-Makeup"
+}

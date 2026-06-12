@@ -1,0 +1,21 @@
+{
+  "slug": "prebuilt-journeys",
+  "title": "Pre-built Journeys",
+  "category": "onesignal-work",
+  "tags": [
+    "Journeys",
+    "UX Design",
+    "Templates",
+    "Empty States"
+  ],
+  "dateStart": "2024-01-01",
+  "dateEnd": "2024-01-28",
+  "summary": "Give users ready-made journey templates and an empty-state path so they aren't starting from a blank canvas.",
+  "status": "shipped",
+  "links": {
+    "video": "https://www.loom.com/share/e231fe274a04425d89b3f19639a78382"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

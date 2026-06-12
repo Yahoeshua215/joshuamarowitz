@@ -1,0 +1,21 @@
+{
+  "slug": "event-triggers",
+  "title": "Event Triggers",
+  "category": "onesignal-work",
+  "tags": [
+    "Events",
+    "UX Design",
+    "Journeys",
+    "Creator"
+  ],
+  "dateStart": "2024-12-01",
+  "dateEnd": "2024-12-28",
+  "summary": "Enter a journey from a custom event, including adding/editing event properties in settings.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/ApuolN2R"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

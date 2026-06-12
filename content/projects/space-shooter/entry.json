@@ -1,0 +1,25 @@
+{
+  "slug": "space-shooter",
+  "title": "Space Shooter",
+  "category": "personal",
+  "tags": [
+    "Phaser",
+    "Game",
+    "Arcade",
+    "JavaScript"
+  ],
+  "dateStart": "2026-01-23",
+  "dateEnd": "2026-05-21",
+  "summary": "A complete retro 2D vertical-scrolling space shooter built with Phaser.js — progressive waves, boss fights every fifth round, power-ups, destructible asteroids, a combo multiplier, and locally persisted high scores.",
+  "status": "shipped",
+  "links": {},
+  "images": [
+    {
+      "src": "/projects/space-shooter/screenshot.png",
+      "alt": "Space Shooter screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/space-shooter"
+}

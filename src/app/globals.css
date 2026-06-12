@@ -1,26 +1,652 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f7f5;
+  --foreground: #1a1a1a;
+  --muted: #6b6b6b;
+  --border: #e4e4e0;
+  --surface: #ffffff;
+  --surface-hover: #f0f0ec;
+  --accent: #8b9a46;
+  --accent-muted: rgba(139, 154, 70, 0.12);
+  --ring: rgba(26, 26, 26, 0.08);
+}
+
+.dark {
+  --background: #0f0f0f;
+  --foreground: #ededed;
+  --muted: #8a8a8a;
+  --border: #262626;
+  --surface: #161616;
+  --surface-hover: #1f1f1f;
+  --accent: #b8c96e;
+  --accent-muted: rgba(184, 201, 110, 0.1);
+  --ring: rgba(237, 237, 237, 0.06);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--accent-muted);
+  color: var(--foreground);
+}
+
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] .chevron {
+  transform: rotate(90deg);
+}
+
+.prose-case h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-case h2:first-child {
+  margin-top: 0;
+}
+
+.prose-case p {
+  color: var(--foreground);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.prose-case ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-case li {
+  line-height: 1.7;
+  margin-bottom: 0.25rem;
+}
+
+.input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-muted);
+}
+
+/* Landing: slow vertical "credits" scroll of skills */
+@keyframes credits-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.credits-track {
+  animation: credits-scroll 22s linear infinite;
+}
+
+.credits-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 18%,
+    #000 82%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 18%,
+    #000 82%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credits-track {
+    animation: none;
+  }
+}
+
+/* Futuristic HUD panel for the globe project modal */
+.hud-panel {
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.hud-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.5;
+}
+
+/* Force the reused CaseStudy block onto the dark HUD theme */
+.hud-case .prose-case {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.hud-case .prose-case h2 {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hud-case .prose-case p,
+.hud-case .prose-case li {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================
+   Sci-fi landing HUD ("loadout" aesthetic)
+   ============================================================ */
+
+.scifi-bg {
+  background:
+    radial-gradient(
+      ellipse 120% 80% at 50% 0%,
+      rgba(94, 224, 200, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 90% 70% at 80% 100%,
+      rgba(63, 122, 255, 0.1),
+      transparent 60%
+    ),
+    #04070c;
+}
+
+/* Chamfered, glowing panel — wrapper renders the glowing border, the
+   inner element renders the dark fill. drop-shadow follows the clip. */
+.scifi-panel {
+  position: relative;
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+  background: linear-gradient(
+    155deg,
+    rgba(94, 224, 200, 0.6),
+    rgba(94, 224, 200, 0.12) 55%,
+    rgba(94, 224, 200, 0.35)
+  );
+  padding: 1.5px;
+  filter: drop-shadow(0 0 7px rgba(94, 224, 200, 0.3));
+}
+
+.scifi-panel-inner {
+  height: 100%;
+  clip-path: polygon(
+    15px 0,
+    100% 0,
+    100% calc(100% - 15px),
+    calc(100% - 15px) 100%,
+    0 100%,
+    0 15px
+  );
+  background: linear-gradient(
+    160deg,
+    rgba(10, 22, 30, 0.94),
+    rgba(6, 12, 18, 0.96)
+  );
+}
+
+/* Selectable "loadout" list item — chamfered left edge */
+.scifi-item {
+  position: relative;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% 100%,
+    14px 100%,
+    0 calc(100% - 14px),
+    0 14px
+  );
+  background: linear-gradient(
+    90deg,
+    rgba(94, 224, 200, 0.16),
+    rgba(94, 224, 200, 0.03) 60%,
+    transparent
+  );
+  border: 1px solid rgba(94, 224, 200, 0.18);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.scifi-item:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(94, 224, 200, 0.34),
+    rgba(94, 224, 200, 0.08) 70%,
+    transparent
+  );
+  border-color: rgba(94, 224, 200, 0.55);
+  box-shadow:
+    inset 3px 0 0 var(--scifi-accent, #5ee0c8),
+    0 0 14px rgba(94, 224, 200, 0.25);
+}
+
+/* Stat / proficiency bar */
+.scifi-bar {
+  height: 7px;
+  background: rgba(255, 255, 255, 0.07);
+  clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
+  overflow: hidden;
+}
+
+.scifi-bar > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(94, 224, 200, 0.5), #5ee0c8);
+  box-shadow: 0 0 8px rgba(94, 224, 200, 0.6);
+}
+
+/* Edge tick marks */
+.scifi-ticks-x {
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(94, 224, 200, 0.4) 0,
+    rgba(94, 224, 200, 0.4) 1px,
+    transparent 1px,
+    transparent 11px
+  );
+}
+
+.scifi-ticks-y {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(94, 224, 200, 0.4) 0,
+    rgba(94, 224, 200, 0.4) 1px,
+    transparent 1px,
+    transparent 11px
+  );
+}
+
+/* Capability tile */
+.scifi-tile {
+  position: relative;
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+  background: linear-gradient(
+    160deg,
+    rgba(94, 224, 200, 0.12),
+    rgba(10, 22, 30, 0.6)
+  );
+  border: 1px solid rgba(94, 224, 200, 0.2);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.scifi-tile:hover {
+  border-color: rgba(94, 224, 200, 0.6);
+  box-shadow: 0 0 16px rgba(94, 224, 200, 0.22);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Drifting space background (subtle parallax stars + nebulae)
+   ============================================================ */
+.space-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.space-stars {
+  background-repeat: repeat;
+  will-change: background-position;
+}
+
+.space-stars-1 {
+  background-image:
+    radial-gradient(1.4px 1.4px at 40px 60px, rgba(255, 255, 255, 1), transparent),
+    radial-gradient(1.1px 1.1px at 130px 180px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1.6px 1.6px at 220px 90px, rgba(190, 225, 255, 0.95), transparent),
+    radial-gradient(1.1px 1.1px at 300px 250px, rgba(255, 255, 255, 0.75), transparent),
+    radial-gradient(1.1px 1.1px at 80px 310px, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1.2px 1.2px at 170px 30px, rgba(200, 245, 235, 0.8), transparent),
+    radial-gradient(1px 1px at 260px 320px, rgba(255, 255, 255, 0.6), transparent);
+  background-size: 320px 320px;
+  opacity: 0.95;
+  animation: space-drift-1 260s linear infinite;
+}
+
+.space-stars-2 {
+  background-image:
+    radial-gradient(1.1px 1.1px at 60px 100px, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1.8px 1.8px at 200px 50px, rgba(210, 230, 255, 0.9), transparent),
+    radial-gradient(1.1px 1.1px at 120px 260px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.3px 1.3px at 330px 210px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 420px 360px, rgba(255, 255, 255, 0.6), transparent);
+  background-size: 480px 480px;
+  opacity: 0.7;
+  animation: space-drift-2 400s linear infinite;
+}
+
+.space-stars-3 {
+  background-image:
+    radial-gradient(1px 1px at 30px 50px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 110px 140px, rgba(190, 220, 255, 0.6), transparent),
+    radial-gradient(1.2px 1.2px at 180px 200px, rgba(255, 255, 255, 0.65), transparent),
+    radial-gradient(1px 1px at 80px 230px, rgba(255, 255, 255, 0.5), transparent);
+  background-size: 240px 240px;
+  opacity: 0.6;
+  animation: space-drift-3 180s linear infinite;
+}
+
+@keyframes space-drift-1 {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 320px -640px;
+  }
+}
+
+@keyframes space-drift-2 {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -480px -960px;
+  }
+}
+
+@keyframes space-drift-3 {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 240px -480px;
+  }
+}
+
+/* Occasional slow shooting star */
+.shooting-star {
+  position: absolute;
+  height: 2px;
+  width: 170px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 1)
+  );
+  border-radius: 9999px;
+  opacity: 0;
+  filter: drop-shadow(0 0 7px rgba(180, 230, 255, 0.9));
+  transform: rotate(24deg);
+}
+
+/* Bright comet head so it reads even through the frosted modal */
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%);
+  box-shadow: 0 0 12px 3px rgba(190, 235, 255, 0.95);
+}
+
+@keyframes shooting-star-move {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(24deg) scaleX(0.3);
+  }
+  3% {
+    opacity: 1;
+  }
+  16% {
+    opacity: 0.9;
+    transform: translate(340px, 150px) rotate(24deg) scaleX(1);
+  }
+  22% {
+    opacity: 0;
+    transform: translate(420px, 186px) rotate(24deg) scaleX(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(420px, 186px) rotate(24deg) scaleX(0.6);
+  }
+}
+
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.3;
+  will-change: transform;
+}
+
+@keyframes nebula-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(3%, -4%) scale(1.06);
+  }
+}
+
+@keyframes nebula-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.04);
+  }
+  50% {
+    transform: translate(-4%, 3%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .space-stars-1,
+  .space-stars-2,
+  .space-stars-3,
+  .shooting-star,
+  .nebula {
+    animation: none;
+  }
+  .shooting-star {
+    display: none;
+  }
+}
+
+/* Mission cards — color-coded without the generic left bar */
+.mission-card {
+  --c: #5ee0c8;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.015) 60%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mission-card:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.03) 60%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 24px -10px rgba(255, 255, 255, 0.4);
+}
+
+.mission-index {
+  color: var(--c);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--c) 60%, transparent);
+}
+
+/* Slowly rotating targeting reticle */
+@keyframes scifi-reticle-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scifi-reticle {
+  animation: scifi-reticle-spin 14s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scifi-reticle {
+    animation: none;
+  }
+}
+
+/* ── Satellite dot field: leader line + extended label on hover ───────────── */
+.sat-leader {
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sat-leader-line {
+  display: block;
+  height: 1px;
+  width: 58px;
+  flex: none;
+  transform-origin: left center;
+  background: linear-gradient(
+    to right,
+    var(--c),
+    color-mix(in srgb, var(--c) 25%, transparent)
+  );
+  box-shadow: 0 0 6px color-mix(in srgb, var(--c) 70%, transparent);
+  animation: sat-leader-grow 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.sat-leader-label {
+  margin-left: 9px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 0 10px rgba(0, 0, 0, 0.95),
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 16px color-mix(in srgb, var(--c) 55%, transparent);
+  animation: sat-leader-fade 0.3s ease-out 0.1s both;
+}
+
+.sat-leader-label:hover {
+  color: #fff;
+}
+
+@keyframes sat-leader-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes sat-leader-fade {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sat-leader-line,
+  .sat-leader-label {
+    animation: none;
+  }
 }

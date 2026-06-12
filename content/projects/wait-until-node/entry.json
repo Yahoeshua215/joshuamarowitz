@@ -1,0 +1,26 @@
+{
+  "slug": "wait-until-node",
+  "title": "Wait Until (event node)",
+  "category": "onesignal-work",
+  "tags": [
+    "Journeys",
+    "UX Design",
+    "Events",
+    "Prototyping"
+  ],
+  "dateStart": "2025-02-01",
+  "dateEnd": "2025-02-28",
+  "summary": "A \"Wait Until [event]\" node so journeys can pause for a customer action before continuing.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/7KulYvZd"
+  },
+  "images": [
+    {
+      "src": "/projects/wait-until-node/screenshot.png",
+      "alt": "Wait Until node journey builder with condition details panel"
+    }
+  ],
+  "featured": false,
+  "order": 0
+}

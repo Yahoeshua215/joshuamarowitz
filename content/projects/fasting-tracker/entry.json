@@ -1,0 +1,28 @@
+{
+  "slug": "fasting-tracker",
+  "title": "Fasting Tracker",
+  "category": "personal",
+  "tags": [
+    "React",
+    "Vite",
+    "Health",
+    "PWA"
+  ],
+  "dateStart": "2026-04-26",
+  "dateEnd": "2026-06-10",
+  "summary": "Physiology-aware intermittent fasting companion with timer, protocol tracking, phase visualization, and local-first IndexedDB persistence.",
+  "status": "prototype",
+  "links": {
+    "live": "https://fasting-sandy.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/fasting-tracker/screenshot.png",
+      "alt": "Fasting Tracker screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/fasting-app",
+  "embedUrl": "https://fasting-sandy.vercel.app"
+}

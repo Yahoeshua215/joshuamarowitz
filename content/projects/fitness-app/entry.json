@@ -1,0 +1,28 @@
+{
+  "slug": "fitness-app",
+  "title": "Fitness App",
+  "category": "personal",
+  "tags": [
+    "React",
+    "Vite",
+    "Fitness",
+    "Supabase"
+  ],
+  "dateStart": "2025-12-06",
+  "dateEnd": "2026-06-09",
+  "summary": "Personal training tool with workout logging, CSV/XLSX import, gym management, equipment browser, and Supabase auth.",
+  "status": "prototype",
+  "links": {
+    "live": "https://fitness-app-omega-five.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/fitness-app/screenshot.png",
+      "alt": "Fitness App screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/fitness-app",
+  "embedUrl": "https://fitness-app-omega-five.vercel.app"
+}

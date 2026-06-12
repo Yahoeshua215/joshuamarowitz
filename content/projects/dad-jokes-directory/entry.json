@@ -1,0 +1,28 @@
+{
+  "slug": "dad-jokes-directory",
+  "title": "Dad Jokes Directory",
+  "category": "personal",
+  "tags": [
+    "Next.js",
+    "Directory",
+    "Humor",
+    "SEO"
+  ],
+  "dateStart": "2026-02-25",
+  "dateEnd": "2026-03-05",
+  "summary": "Searchable, categorized dad joke directory with topic packs, joke-of-the-day, and AI enrichment tooling for content expansion.",
+  "status": "shipped",
+  "links": {
+    "live": "https://jokelikeadad.com"
+  },
+  "images": [
+    {
+      "src": "/projects/dad-jokes-directory/screenshot.png",
+      "alt": "Dad Jokes Directory screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/dad-jokes-directory",
+  "embedUrl": "https://jokelikeadad.com"
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "ai-poc",
+  "title": "AI Proof-of-Concept",
+  "category": "onesignal-work",
+  "tags": [
+    "AI",
+    "UX Design",
+    "Prototyping",
+    "Figma"
+  ],
+  "dateStart": "2025-02-01",
+  "dateEnd": "ongoing",
+  "summary": "Early proof-of-concept explorations for AI across summaries, onboarding, and content generation.",
+  "status": "prototype",
+  "links": {
+    "video": "https://share.zight.com/NQumkxJw"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

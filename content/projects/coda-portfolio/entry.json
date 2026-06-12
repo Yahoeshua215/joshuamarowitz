@@ -1,0 +1,24 @@
+{
+  "slug": "coda-portfolio",
+  "title": "Coda Case Study Portfolio",
+  "category": "personal",
+  "tags": [
+    "Next.js",
+    "Coda",
+    "Portfolio",
+    "Design"
+  ],
+  "dateStart": "2026-01-05",
+  "dateEnd": "2026-01-06",
+  "summary": "Dynamic Next.js portfolio that pulls product design case studies from Coda with Apple-inspired layout and canvas image support.",
+  "status": "prototype",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Automated-Projects"
+}

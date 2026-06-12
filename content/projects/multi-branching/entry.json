@@ -1,0 +1,20 @@
+{
+  "slug": "multi-branching",
+  "title": "Multi-branching",
+  "category": "onesignal-work",
+  "tags": [
+    "Journeys",
+    "UX Design",
+    "Branching"
+  ],
+  "dateStart": "2024-11-01",
+  "dateEnd": "2024-11-28",
+  "summary": "Allow journeys to split into multiple branches with even or random distribution and re-entry handling.",
+  "status": "shipped",
+  "links": {
+    "video": "https://www.loom.com/share/a2e191c26ca34881ab6c2ca7982b2af9"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

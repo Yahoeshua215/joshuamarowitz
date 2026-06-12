@@ -1,0 +1,28 @@
+{
+  "slug": "ab-testing-discovery",
+  "title": "A/B Testing in Journeys — Discovery",
+  "category": "onesignal",
+  "tags": [
+    "Journeys",
+    "A/B Testing",
+    "Research",
+    "Discovery"
+  ],
+  "dateStart": "2026-02-18",
+  "dateEnd": "2026-02-24",
+  "summary": "A password-protected research site supporting customer discovery for A/B Testing in Journeys, with per-customer pages capturing context and findings across accounts like Diamond Kinetics and SimplyCook.",
+  "status": "prototype",
+  "links": {
+    "live": "https://ab-discovery-call-seven.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/ab-testing-discovery/screenshot.png",
+      "alt": "A/B Testing in Journeys — Discovery screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/A:b Testing",
+  "embedUrl": "https://ab-discovery-call-seven.vercel.app"
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "os-gamey",
+  "title": "SignalQuest",
+  "category": "onesignal",
+  "tags": [
+    "Game",
+    "Push Notifications",
+    "Education",
+    "Onboarding"
+  ],
+  "dateStart": "2026-01-23",
+  "dateEnd": "2026-05-21",
+  "summary": "A push-notification training sim that walks players from intro to office to a campaign builder and results screen — teaching OneSignal messaging concepts through play.",
+  "status": "prototype",
+  "links": {},
+  "images": [
+    {
+      "src": "/projects/os-gamey/screenshot.png",
+      "alt": "SignalQuest screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/OS-Gamey"
+}

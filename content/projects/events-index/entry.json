@@ -1,0 +1,22 @@
+{
+  "slug": "events-index",
+  "title": "Events Index / Storage",
+  "category": "onesignal-work",
+  "tags": [
+    "Events",
+    "UX Design",
+    "Analytics",
+    "v0",
+    "Prototyping"
+  ],
+  "dateStart": "2025-04-01",
+  "dateEnd": "2025-04-28",
+  "summary": "A browsable event + storage index with filters, date ranges, and goals/insights.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/z8uWNXrG"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

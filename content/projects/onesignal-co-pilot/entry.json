@@ -1,0 +1,30 @@
+{
+  "slug": "onesignal-co-pilot",
+  "title": "OneSignal Co-Pilot",
+  "category": "onesignal",
+  "tags": [
+    "AI",
+    "Copilot",
+    "Dashboard",
+    "Journeys"
+  ],
+  "dateStart": "2026-02-09",
+  "dateEnd": "2026-03-24",
+  "summary": "An AI copilot built into the OneSignal dashboard — a floating launcher and sidebar chat with streaming responses, journey templates, and proactive insights to help marketers act without hunting through the UI.",
+  "status": "prototype",
+  "links": {},
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "OneSignal Co-Pilot preview"
+    }
+  ],
+  "caseStudy": {
+    "problem": "Marketers know what they want to accomplish but often can't find the right surface in a dense dashboard. The gap between intent and action slows down campaign and journey creation.",
+    "solution": "Prototyped an in-product AI copilot: a floating launcher opens a sidebar chat with streaming OpenAI responses, prebuilt journey templates, and proactive insights surfaced from account state.",
+    "outcome": "A working exploration of how conversational AI can collapse the distance between a marketer's goal and the product action that achieves it."
+  },
+  "featured": true,
+  "order": 10,
+  "sourcePath": "/Users/joshuamarowitz/OneSignal-co-pilot"
+}

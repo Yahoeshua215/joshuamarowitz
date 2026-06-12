@@ -1,0 +1,23 @@
+{
+  "slug": "wild-card-game",
+  "title": "Wild Card Game",
+  "category": "personal",
+  "tags": [
+    "iOS",
+    "SwiftUI",
+    "Game"
+  ],
+  "dateStart": "2024-03-12",
+  "dateEnd": "2026-03-19",
+  "summary": "SwiftUI card war game — flip cards against the CPU, track scores, and play through a polished arcade-style interface.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Wild Card Game"
+}

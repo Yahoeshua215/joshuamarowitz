@@ -1,0 +1,21 @@
+{
+  "slug": "push-notification-platform",
+  "title": "push-notification-platform",
+  "category": "personal",
+  "tags": [
+    "project"
+  ],
+  "dateStart": "2025-12-01",
+  "dateEnd": "2026-01-08",
+  "summary": "Personal project project built with AI-assisted development.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/push-notification-platform"
+}

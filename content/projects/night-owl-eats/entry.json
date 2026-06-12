@@ -1,0 +1,25 @@
+{
+  "slug": "night-owl-eats",
+  "title": "Night Owl Eats",
+  "category": "personal",
+  "tags": [
+    "Next.js",
+    "Directory",
+    "Restaurants",
+    "Supabase",
+    "SEO"
+  ],
+  "dateStart": "2026-02-08",
+  "dateEnd": "2026-02-09",
+  "summary": "Late-night restaurant directory organized by state, city, and neighborhood with verified hours and feature filters like open after midnight.",
+  "status": "shipped",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/nightowls"
+}

@@ -1,0 +1,22 @@
+{
+  "slug": "onesignal-ai",
+  "title": "OneSignal AI",
+  "category": "onesignal-work",
+  "tags": [
+    "AI",
+    "UX Design",
+    "MCP",
+    "Copilot",
+    "Creator"
+  ],
+  "dateStart": "2026-02-01",
+  "dateEnd": "ongoing",
+  "summary": "An in-product AI copilot/assistant (and dashboard) for OneSignal, connected via MCP.",
+  "status": "prototype",
+  "links": {
+    "video": "https://share.zight.com/eDuOmjxY"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "journey-goals",
+  "title": "Journey Goals",
+  "category": "onesignal-work",
+  "tags": [
+    "Journeys",
+    "UX Design",
+    "Analytics",
+    "Creator"
+  ],
+  "dateStart": "2025-08-01",
+  "dateEnd": "2025-08-28",
+  "summary": "Let users set a measurable goal (e.g., CTR/clicks) against a journey without bloating journey settings.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/bLuPJ1ze"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

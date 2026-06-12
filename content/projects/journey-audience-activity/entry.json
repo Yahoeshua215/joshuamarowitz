@@ -1,0 +1,21 @@
+{
+  "slug": "journey-audience-activity",
+  "title": "Audience Activity for Journey Messages",
+  "category": "onesignal-work",
+  "tags": [
+    "Journeys",
+    "UX Design",
+    "Analytics",
+    "Tables"
+  ],
+  "dateStart": "2024-01-01",
+  "dateEnd": "2024-01-28",
+  "summary": "Show per-message audience activity inside journeys with consistent search/tabs/filtering.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/7KunZl8z"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

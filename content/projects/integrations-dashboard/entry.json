@@ -1,0 +1,20 @@
+{
+  "slug": "integrations-dashboard",
+  "title": "Integrations Dashboard",
+  "category": "onesignal-work",
+  "tags": [
+    "Integrations",
+    "UX Design",
+    "Dashboards"
+  ],
+  "dateStart": "2025-05-01",
+  "dateEnd": "2025-05-28",
+  "summary": "A health view across all integrations and syncs.",
+  "status": "shipped",
+  "links": {
+    "video": "https://share.zight.com/8LuEl9NE"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

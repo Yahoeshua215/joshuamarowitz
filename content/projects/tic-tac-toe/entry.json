@@ -1,0 +1,23 @@
+{
+  "slug": "tic-tac-toe",
+  "title": "Tic-Tac-Toe",
+  "category": "personal",
+  "tags": [
+    "iOS",
+    "SwiftUI",
+    "Game"
+  ],
+  "dateStart": "2024-03-13",
+  "dateEnd": "2026-03-18",
+  "summary": "Classic tic-tac-toe rebuilt in SwiftUI as a quick AI-assisted iOS experiment.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/TicTactToe"
+}

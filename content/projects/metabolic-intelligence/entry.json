@@ -1,0 +1,29 @@
+{
+  "slug": "metabolic-intelligence",
+  "title": "Metabolic Intelligence Platform",
+  "category": "personal",
+  "tags": [
+    "Next.js",
+    "Health",
+    "Knowledge Base",
+    "AI",
+    "Supabase"
+  ],
+  "dateStart": "2026-05-25",
+  "dateEnd": "2026-05-25",
+  "summary": "Topic-first metabolic health knowledge platform with curated experts, consensus summaries, hybrid search, and an admin publishing workflow.",
+  "status": "prototype",
+  "links": {
+    "live": "https://metabolic-intelligence.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/metabolic-intelligence/screenshot.png",
+      "alt": "Metabolic Intelligence Platform screenshot"
+    }
+  ],
+  "featured": true,
+  "order": 10,
+  "sourcePath": "/Users/joshuamarowitz/Metabolic",
+  "embedUrl": "https://metabolic-intelligence.vercel.app"
+}

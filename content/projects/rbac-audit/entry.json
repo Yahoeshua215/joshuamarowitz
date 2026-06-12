@@ -1,0 +1,21 @@
+{
+  "slug": "rbac-audit",
+  "title": "RBAC + Audit",
+  "category": "onesignal-work",
+  "tags": [
+    "RBAC",
+    "UX Design",
+    "Permissions",
+    "Compliance"
+  ],
+  "dateStart": "2025-09-01",
+  "dateEnd": "ongoing",
+  "summary": "Role-based access control and an audit/activity log for admins.",
+  "status": "prototype",
+  "links": {
+    "video": "https://share.zight.com/6qu44QA0"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

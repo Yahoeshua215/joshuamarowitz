@@ -1,0 +1,24 @@
+{
+  "slug": "dogfooding-push",
+  "title": "Dogfooding Push",
+  "category": "onesignal",
+  "tags": [
+    "iOS",
+    "Push Notifications",
+    "OneSignal",
+    "Dogfooding"
+  ],
+  "dateStart": "2024-09-10",
+  "dateEnd": "2026-03-18",
+  "summary": "iOS app for dogfooding OneSignal push notifications — test delivery, payloads, and in-app handling on real devices.",
+  "status": "prototype",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Dogfooding-Push"
+}

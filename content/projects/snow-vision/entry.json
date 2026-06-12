@@ -1,0 +1,24 @@
+{
+  "slug": "snow-vision",
+  "title": "Snow",
+  "category": "personal",
+  "tags": [
+    "visionOS",
+    "SwiftUI",
+    "RealityKit",
+    "3D"
+  ],
+  "dateStart": "2024-01-07",
+  "dateEnd": "2026-03-22",
+  "summary": "visionOS starter exploring immersive spaces with RealityKit — toggle into a spatial snow scene from a 3D model preview.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Snow"
+}

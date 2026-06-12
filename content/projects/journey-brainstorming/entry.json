@@ -1,0 +1,28 @@
+{
+  "slug": "journey-brainstorming",
+  "title": "Journey Brainstorming",
+  "category": "onesignal",
+  "tags": [
+    "Journeys",
+    "AI",
+    "OneSignal",
+    "v0",
+    "Prototyping"
+  ],
+  "dateStart": "2026-02-01",
+  "dateEnd": "2026-02-28",
+  "summary": "AI-powered journey builder prototype for OneSignal — intelligent workflow suggestions, multi-channel orchestration across push, email, SMS, and in-app, with real-time analytics framing.",
+  "status": "prototype",
+  "links": {
+    "live": "https://journey-brainystormy.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/journey-brainstorming/screenshot.png",
+      "alt": "Journey Brainstorming screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "embedUrl": "https://journey-brainystormy.vercel.app"
+}

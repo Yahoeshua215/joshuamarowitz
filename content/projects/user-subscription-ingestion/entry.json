@@ -1,0 +1,21 @@
+{
+  "slug": "user-subscription-ingestion",
+  "title": "User & Subscription Ingestion",
+  "category": "onesignal-work",
+  "tags": [
+    "Integrations",
+    "UX Design",
+    "Data",
+    "Prototyping"
+  ],
+  "dateStart": "2025-09-01",
+  "dateEnd": "ongoing",
+  "summary": "Ingest users/subscriptions with visibility into sync runs and rejected records.",
+  "status": "prototype",
+  "links": {
+    "video": "https://share.zight.com/jkuk5OAr"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

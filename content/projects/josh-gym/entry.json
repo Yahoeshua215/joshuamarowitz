@@ -1,0 +1,28 @@
+{
+  "slug": "josh-gym",
+  "title": "Josh's Gym",
+  "category": "personal",
+  "tags": [
+    "React",
+    "Vite",
+    "Fitness",
+    "Landing Page"
+  ],
+  "dateStart": "2025-12-04",
+  "dateEnd": "2025-12-05",
+  "summary": "Luxury fitness studio landing page with hero, classes, memberships, and an AI concierge modal.",
+  "status": "prototype",
+  "links": {
+    "live": "https://josh-gym.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/josh-gym/screenshot.png",
+      "alt": "Josh's Gym screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/JoshGym",
+  "embedUrl": "https://josh-gym.vercel.app"
+}

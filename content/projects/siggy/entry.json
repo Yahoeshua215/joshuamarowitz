@@ -1,0 +1,25 @@
+{
+  "slug": "siggy",
+  "title": "Siggy — OneSignal Slack Bot",
+  "category": "personal",
+  "tags": [
+    "AI",
+    "Slack",
+    "MCP",
+    "OneSignal",
+    "Bot"
+  ],
+  "dateStart": "2026-06-06",
+  "dateEnd": "2026-06-08",
+  "summary": "Natural-language Slack assistant that drives OneSignal push operations through OpenAI and the OneSignal MCP.",
+  "status": "prototype",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": true,
+  "order": 10,
+  "sourcePath": "/Users/joshuamarowitz/siggy"
+}

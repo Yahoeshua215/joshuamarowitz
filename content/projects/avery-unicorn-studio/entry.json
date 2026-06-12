@@ -1,0 +1,28 @@
+{
+  "slug": "avery-unicorn-studio",
+  "title": "Magical Unicorn Dress-Up Studio",
+  "category": "personal",
+  "tags": [
+    "iOS",
+    "SwiftUI",
+    "Kids",
+    "Creativity"
+  ],
+  "dateStart": "2025-11-17",
+  "dateEnd": "2026-03-19",
+  "summary": "A SwiftUI iOS app for kids to create, customize, and collect magical unicorns — pairing open-ended creativity (colors, manes, wings, decorations) with gentle learning challenges like counting, ordering, and simple math.",
+  "status": "prototype",
+  "links": {
+    "live": "https://unicorn-game-indol.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/avery-unicorn-studio/screenshot.png",
+      "alt": "Magical Unicorn Dress-Up Studio screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Avery Photo Project",
+  "embedUrl": "https://unicorn-game-indol.vercel.app"
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "moto-wheel",
+  "title": "Moto Wheel — Exploded View",
+  "category": "personal",
+  "tags": [
+    "Blender",
+    "Python",
+    "3D",
+    "Visualization"
+  ],
+  "dateStart": "2026-05-26",
+  "dateEnd": "2026-05-26",
+  "summary": "Blender Python project that procedurally builds and renders an exploded motorcycle front wheel assembly.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/projects/moto-wheel/exploded_preview.png",
+      "alt": "moto-wheel preview"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Moto"
+}

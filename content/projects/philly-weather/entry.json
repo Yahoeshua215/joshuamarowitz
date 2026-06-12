@@ -1,0 +1,24 @@
+{
+  "slug": "philly-weather",
+  "title": "Philly Weather",
+  "category": "personal",
+  "tags": [
+    "iOS",
+    "SwiftUI",
+    "Weather",
+    "Video"
+  ],
+  "dateStart": "2026-01-26",
+  "dateEnd": "2026-03-19",
+  "summary": "iOS weather app for Philadelphia with a TikTok-style Vibes feed — vertical video posts of local weather reactions with immersive playback.",
+  "status": "prototype",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/PhillyWeather"
+}

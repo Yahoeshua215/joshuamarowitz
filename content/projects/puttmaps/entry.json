@@ -1,0 +1,29 @@
+{
+  "slug": "puttmaps",
+  "title": "PuttMaps",
+  "category": "personal",
+  "tags": [
+    "Next.js",
+    "Directory",
+    "Maps",
+    "Supabase",
+    "SEO"
+  ],
+  "dateStart": "2026-02-11",
+  "dateEnd": "2026-04-22",
+  "summary": "Nationwide mini-golf course directory with geo-organized browse, maps, travel guides, and data pipelines for scraping and enrichment.",
+  "status": "shipped",
+  "links": {
+    "live": "https://www.puttmaps.com"
+  },
+  "images": [
+    {
+      "src": "/projects/puttmaps/screenshot.png",
+      "alt": "PuttMaps screenshot"
+    }
+  ],
+  "featured": true,
+  "order": 10,
+  "sourcePath": "/Users/joshuamarowitz/puttreviews",
+  "embedUrl": "https://www.puttmaps.com"
+}

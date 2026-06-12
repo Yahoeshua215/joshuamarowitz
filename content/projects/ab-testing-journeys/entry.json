@@ -1,0 +1,22 @@
+{
+  "slug": "ab-testing-journeys",
+  "title": "A/B Testing in Journeys",
+  "category": "onesignal-work",
+  "tags": [
+    "Experimentation",
+    "UX Design",
+    "Journeys",
+    "Analytics",
+    "Creator"
+  ],
+  "dateStart": "2026-01-01",
+  "dateEnd": "ongoing",
+  "summary": "A/B test journeys end-to-end — authoring the test and reading results, including automatic winner selection.",
+  "status": "prototype",
+  "links": {
+    "video": "https://share.zight.com/eDuO4PR6"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

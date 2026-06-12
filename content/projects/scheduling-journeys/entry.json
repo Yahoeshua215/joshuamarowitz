@@ -1,0 +1,21 @@
+{
+  "slug": "scheduling-journeys",
+  "title": "Scheduling Journeys",
+  "category": "onesignal-work",
+  "tags": [
+    "Journeys",
+    "UX Design",
+    "Scheduling",
+    "Entitlements"
+  ],
+  "dateStart": "2024-09-01",
+  "dateEnd": "2024-09-28",
+  "summary": "Let users schedule journey entry by date/time, including the entitlement story.",
+  "status": "shipped",
+  "links": {
+    "video": "https://www.loom.com/share/5d6425567e3d44ee9bca25ed4cc1a8d3"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

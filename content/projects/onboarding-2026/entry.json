@@ -1,0 +1,21 @@
+{
+  "slug": "onboarding-2026",
+  "title": "Onboarding",
+  "category": "onesignal-work",
+  "tags": [
+    "Onboarding",
+    "UX Design",
+    "Growth",
+    "Research"
+  ],
+  "dateStart": "2026-01-01",
+  "dateEnd": "ongoing",
+  "summary": "Rework the new-user signup/onboarding flow with persona paths (marketer vs engineer) and brand-asset setup.",
+  "status": "prototype",
+  "links": {
+    "video": "https://share.zight.com/qGuWQqvv"
+  },
+  "images": [],
+  "featured": false,
+  "order": 0
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "inspiration-vision",
+  "title": "Inspiration",
+  "category": "personal",
+  "tags": [
+    "visionOS",
+    "SwiftUI",
+    "RealityKit"
+  ],
+  "dateStart": "2024-01-07",
+  "dateEnd": "2026-03-21",
+  "summary": "visionOS exploration app scaffold with RealityKit content packages for spatial UI experiments.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Inspiration"
+}

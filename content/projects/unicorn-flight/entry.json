@@ -1,0 +1,24 @@
+{
+  "slug": "unicorn-flight",
+  "title": "Unicorn Flight",
+  "category": "personal",
+  "tags": [
+    "JavaScript",
+    "Canvas",
+    "Game",
+    "HTML"
+  ],
+  "dateStart": "2026-01-24",
+  "dateEnd": "2026-05-21",
+  "summary": "Retro side-scrolling shooter with a pastel fantasy aesthetic — a rider on a flying unicorn battles killer clouds and dragon bosses across three levels.",
+  "status": "prototype",
+  "images": [
+    {
+      "src": "/projects/unicorn-flight/screenshot.png",
+      "alt": "Unicorn Flight screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/unicorn-flight"
+}

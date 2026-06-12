@@ -1,0 +1,24 @@
+{
+  "slug": "journey-to-sun",
+  "title": "Journey to the Sun",
+  "category": "personal",
+  "tags": [
+    "Next.js",
+    "Three.js",
+    "Game",
+    "3D"
+  ],
+  "dateStart": "2025-06-13",
+  "dateEnd": "2025-06-13",
+  "summary": "3D solar-system exploration game where players hop between planets from Neptune toward the Sun, built with React Three Fiber.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/code-game"
+}

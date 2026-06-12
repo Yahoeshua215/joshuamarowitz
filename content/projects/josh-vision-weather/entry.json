@@ -1,0 +1,24 @@
+{
+  "slug": "josh-vision-weather",
+  "title": "Josh Vision Weather",
+  "category": "personal",
+  "tags": [
+    "visionOS",
+    "SwiftUI",
+    "RealityKit",
+    "Weather"
+  ],
+  "dateStart": "2024-01-07",
+  "dateEnd": "2026-03-22",
+  "summary": "visionOS weather exploration with RealityKit 3D scenes and an immersive space toggle for spatial weather visualization.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Josh Vision Weather App"
+}

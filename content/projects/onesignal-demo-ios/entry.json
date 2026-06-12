@@ -1,0 +1,24 @@
+{
+  "slug": "onesignal-demo-ios",
+  "title": "OneSignal Demo iOS",
+  "category": "onesignal",
+  "tags": [
+    "iOS",
+    "SDK",
+    "OneSignal",
+    "Onboarding"
+  ],
+  "dateStart": "2026-05-11",
+  "dateEnd": "2026-05-11",
+  "summary": "OneSignal SDK demo app with launchpad onboarding patterns for testing mobile push setup end-to-end.",
+  "status": "experiment",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/sdktest-2"
+}

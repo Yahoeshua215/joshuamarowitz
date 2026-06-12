@@ -1,0 +1,24 @@
+{
+  "slug": "rbac",
+  "title": "Role-Based Access Control",
+  "category": "onesignal",
+  "tags": [
+    "RBAC",
+    "Dashboard",
+    "Permissions"
+  ],
+  "dateStart": "2026-01-28",
+  "dateEnd": "2026-03-24",
+  "summary": "A OneSignal dashboard exploration of org and app role-based access control — members management, org permissions, entitlements, and permission-gated UI.",
+  "status": "prototype",
+  "links": {},
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Role-Based Access Control preview"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/RBAC"
+}

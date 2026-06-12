@@ -1,0 +1,25 @@
+{
+  "slug": "onesiggy-game",
+  "title": "Marketing Quest",
+  "category": "onesignal",
+  "tags": [
+    "Game",
+    "Phaser",
+    "Education",
+    "Onboarding"
+  ],
+  "dateStart": "2026-01-23",
+  "dateEnd": "2026-05-22",
+  "summary": "A pixel-art Phaser game that teaches OneSignal marketing best practices through story, hub, and campaign scenes — with XP, channel unlocks, and saved progress.",
+  "status": "prototype",
+  "links": {},
+  "images": [
+    {
+      "src": "/projects/onesiggy-game/screenshot.png",
+      "alt": "Marketing Quest screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Onesiggy-game"
+}

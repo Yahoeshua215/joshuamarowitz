@@ -1,0 +1,28 @@
+{
+  "slug": "notifyall",
+  "title": "NotifyAll",
+  "category": "personal",
+  "tags": [
+    "React",
+    "Vite",
+    "Marketing",
+    "Push Notifications"
+  ],
+  "dateStart": "2025-12-02",
+  "dateEnd": "2025-12-04",
+  "summary": "Marketing site for a multi-vertical push notification product with vertical-specific use cases and a phone mockup simulator.",
+  "status": "prototype",
+  "links": {
+    "live": "https://noti-fy.vercel.app"
+  },
+  "images": [
+    {
+      "src": "/projects/notifyall/screenshot.png",
+      "alt": "NotifyAll screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/push-website",
+  "embedUrl": "https://noti-fy.vercel.app"
+}

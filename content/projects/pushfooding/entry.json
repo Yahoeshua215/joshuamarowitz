@@ -1,0 +1,24 @@
+{
+  "slug": "pushfooding",
+  "title": "Pushfooding",
+  "category": "onesignal",
+  "tags": [
+    "iOS",
+    "Push Notifications",
+    "OneSignal",
+    "NSE"
+  ],
+  "dateStart": "2024-09-10",
+  "dateEnd": "2026-03-18",
+  "summary": "OneSignal push testing app with notification service extension for validating rich push and delivery flows.",
+  "status": "prototype",
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Preview coming soon"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Pushfooding"
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "sentence-case",
+  "title": "Sentence Case UI Copy",
+  "category": "onesignal",
+  "tags": [
+    "Design System",
+    "Dashboard",
+    "Typography"
+  ],
+  "dateStart": "2026-01-30",
+  "dateEnd": "2026-03-22",
+  "summary": "A design-system experiment migrating OneSignal dashboard copy from title case to sentence case — including analytics time-filter labels and shared formatters — for a calmer, more modern voice.",
+  "status": "experiment",
+  "links": {},
+  "images": [
+    {
+      "src": "/placeholder.svg",
+      "alt": "Sentence case UI copy preview"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/sentence-case"
+}

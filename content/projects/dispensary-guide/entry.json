@@ -1,0 +1,25 @@
+{
+  "slug": "dispensary-guide",
+  "title": "dispensary-guide",
+  "category": "personal",
+  "tags": [
+    "nextjs directory"
+  ],
+  "dateStart": "2026-02-06",
+  "dateEnd": "2026-03-17",
+  "summary": "Personal nextjs directory project built with AI-assisted development.",
+  "status": "experiment",
+  "links": {
+    "live": "https://www.localdispensaryguide.com"
+  },
+  "images": [
+    {
+      "src": "/projects/dispensary-guide/screenshot.png",
+      "alt": "dispensary-guide screenshot"
+    }
+  ],
+  "featured": false,
+  "order": 0,
+  "sourcePath": "/Users/joshuamarowitz/Dispense-directory",
+  "embedUrl": "https://www.localdispensaryguide.com"
+}
