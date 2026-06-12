@@ -206,7 +206,7 @@ export function ProjectShowcase({
   );
 
   const hud = (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 pb-8 pt-16 sm:px-8 sm:pb-10">
+    <div className="fixed inset-0 z-[100] flex min-h-dvh flex-col items-center overflow-y-auto overscroll-y-contain px-4 pb-8 pt-[max(4rem,env(safe-area-inset-top))] sm:px-8 sm:pb-10">
       <button
         type="button"
         aria-label="Close"
@@ -214,7 +214,7 @@ export function ProjectShowcase({
         className="absolute inset-0 bg-black/65 backdrop-blur-sm"
       />
 
-      <div className="relative z-10 flex w-full max-w-[64rem] max-h-[calc(100dvh-6rem)] flex-col">
+      <div className="relative z-10 my-auto flex w-full max-w-[64rem] max-h-[calc(100dvh-6rem)] shrink-0 flex-col">
         <div className="mb-2 flex shrink-0 justify-end">
           <button
             type="button"

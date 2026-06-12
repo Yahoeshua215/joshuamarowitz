@@ -30,7 +30,7 @@ export function MissionControlReturn({
           onReturn();
         }
       }}
-      className="group absolute left-5 top-5 z-[55] flex items-center gap-3"
+      className="group absolute left-5 top-[max(1.25rem,env(safe-area-inset-top))] z-[55] flex items-center gap-3"
     >
       <div
         className="relative h-20 w-16 shrink-0 overflow-hidden rounded-lg border border-[#5ee0c8]/25 bg-gradient-to-b from-white/[0.04] to-black/40 transition-all duration-300 group-hover:border-[#5ee0c8]/70"

@@ -78,7 +78,7 @@ export function GlobeDrawer({ projects }: { projects: Project[] }) {
         onClick={() => setOpen(true)}
         aria-label="Open project list"
         aria-expanded={open}
-        className="absolute right-5 top-5 z-[55] inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70 backdrop-blur-sm transition-colors hover:text-white"
+        className="absolute right-5 top-[max(1.25rem,env(safe-area-inset-top))] z-[55] inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70 backdrop-blur-sm transition-colors hover:text-white"
       >
         <ListTree className="h-3.5 w-3.5" />
         Projects

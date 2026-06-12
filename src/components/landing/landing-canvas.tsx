@@ -264,7 +264,7 @@ export function LandingCanvas() {
 
   return (
     <div
-      className={`scifi-bg fixed inset-0 z-0 overflow-hidden text-white ${
+      className={`scifi-bg fixed inset-0 z-0 min-h-dvh overflow-hidden text-white ${
         launch ? "is-launching" : ""
       } ${entering ? "is-returning" : ""}`}
     >
@@ -348,12 +348,12 @@ export function LandingCanvas() {
       </div>
 
       {/* Mission-control panel — pans off to the side on launch. */}
-      <div className="pivot-front relative flex h-full w-full items-center justify-center overflow-y-auto px-4 py-8">
+      <div className="pivot-front relative flex h-full min-h-0 w-full flex-col items-center overflow-y-auto overscroll-y-contain px-4 pb-8 pt-[max(1.5rem,env(safe-area-inset-top))] sm:py-8">
       <div
         ref={panelRef}
         onPointerMove={handleMove}
         onPointerLeave={handleLeave}
-        className="hud-panel relative z-10 w-full max-w-[60rem] rounded-2xl border border-white/15 backdrop-blur-md transition-transform duration-200 ease-out [transform:perspective(1500px)] will-change-transform"
+        className="hud-panel relative z-10 my-auto w-full max-w-[60rem] shrink-0 rounded-2xl border border-white/15 backdrop-blur-md transition-transform duration-200 ease-out [transform:perspective(1500px)] will-change-transform"
         style={{
           background:
             "linear-gradient(155deg, rgba(255,255,255,0.09), rgba(255,255,255,0.015) 45%, rgba(94,224,200,0.045)), linear-gradient(0deg, rgba(10,14,22,0.32), rgba(10,14,22,0.32))",
