@@ -3,9 +3,23 @@
 import { ArrowLeft } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { MODEL_IDLE_URL } from "@/components/landing/avatar-model";
+import {
+  MODEL_IDLE_URL,
+  MODEL_ONESIGNAL_URL,
+  MODEL_PERSONAL_URL,
+} from "@/components/landing/avatar-model";
+import type { Project } from "@/lib/store/types";
 
 const ACCENT = "#5ee0c8";
+
+// The avatar shown in the corner for each focused section — mirrors the
+// per-card hover avatars on the landing screen. Releases has no dedicated
+// avatar, so it (and the all-sections view) falls back to the default idle.
+const AVATAR_BY_CATEGORY: Record<Project["category"], string> = {
+  personal: MODEL_PERSONAL_URL,
+  onesignal: MODEL_ONESIGNAL_URL,
+  "onesignal-work": MODEL_IDLE_URL,
+};
 
 const LandingScene = dynamic(
   () => import("@/components/landing/landing-scene"),
@@ -16,9 +30,13 @@ const LandingScene = dynamic(
 // link back to the landing "mission control" modal.
 export function MissionControlReturn({
   onReturn,
+  focus = null,
 }: {
   onReturn?: () => void;
+  // The single section currently in focus, or null when all are shown.
+  focus?: Project["category"] | null;
 }) {
+  const modelUrl = focus ? AVATAR_BY_CATEGORY[focus] : MODEL_IDLE_URL;
   return (
     <Link
       href="/"
@@ -38,7 +56,7 @@ export function MissionControlReturn({
       >
         {/* Canvas is decorative here; let clicks fall through to the link. */}
         <div className="pointer-events-none absolute inset-0">
-          <LandingScene modelUrl={MODEL_IDLE_URL} interactive={false} />
+          <LandingScene modelUrl={modelUrl} interactive={false} />
         </div>
         <span className="pointer-events-none absolute left-1.5 top-1.5 h-3 w-3 rounded-full border border-[#5ee0c8]/40" />
       </div>

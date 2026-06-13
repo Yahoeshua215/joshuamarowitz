@@ -3,14 +3,23 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { categoryColor } from "@/components/globe/orbits";
+import type { Project } from "@/lib/store/types";
 import { MISSIONS } from "./landing-data";
 
 export type MissionLaunch = { href: string; label: string; color: string };
 
+// Per-card number color, by position: red, yellow, blue. Drives only the
+// "01/02/03" index (via --num); the card's category color (--c) is unchanged.
+const NUMBER_COLORS = ["#f25f4c", "#f5c542", "#4f9dff"];
+
 export function MissionSelect({
   onLaunch,
+  onHover,
 }: {
   onLaunch?: (mission: MissionLaunch) => void;
+  // Fires with the hovered mission's category key, or null when the pointer
+  // leaves a card. Used to swap the avatar while a card is hovered.
+  onHover?: (key: Project["category"] | null) => void;
 }) {
   return (
     <div className="flex flex-col gap-2.5">
@@ -29,8 +38,15 @@ export function MissionSelect({
                 onLaunch({ href, label: mission.label, color });
               }
             }}
+            onPointerEnter={() => onHover?.(mission.key)}
+            onPointerLeave={() => onHover?.(null)}
             className="mission-card group flex items-center gap-4 rounded-lg p-3.5 text-left backdrop-blur-sm"
-            style={{ "--c": color } as React.CSSProperties}
+            style={
+              {
+                "--c": color,
+                "--num": NUMBER_COLORS[i] ?? color,
+              } as React.CSSProperties
+            }
           >
             <span className="mission-index font-mono text-base font-semibold tabular-nums leading-none">
               {String(i + 1).padStart(2, "0")}

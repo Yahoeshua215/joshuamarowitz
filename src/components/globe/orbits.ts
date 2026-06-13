@@ -76,13 +76,17 @@ export function orbitPosition(
   return target;
 }
 
+// Section colors, kept in sync with the mission-card numbers on the landing
+// screen: Releases = red, OneSignal AI = yellow, Personal = blue.
 export function categoryColor(category: Project["category"]): string {
   switch (category) {
-    case "onesignal":
-      return "#5ee0c8";
     case "onesignal-work":
-      return "#f25f4c";
+      return "#f25f4c"; // red
+    case "onesignal":
+      return "#f5c542"; // yellow
+    case "personal":
+      return "#4f9dff"; // blue
     default:
-      return "#b8c96e";
+      return "#4f9dff";
   }
 }

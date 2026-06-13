@@ -9,19 +9,19 @@ export type MissionCategory = {
 // Maps the three landing entry points onto the existing satellite categories.
 export const MISSIONS: MissionCategory[] = [
   {
-    key: "personal",
-    label: "Personal AI Projects",
-    blurb: "Apps, games, and experiments I build for myself.",
+    key: "onesignal-work",
+    label: "OneSignal Releases",
+    blurb: "Product design I've shipped across the platform.",
   },
   {
     key: "onesignal",
-    label: "Work-Related AI Projects",
-    blurb: "AI prototypes and tools built around OneSignal.",
+    label: "OneSignal AI Projects",
+    blurb: "AI prototypes and tools I built for OneSignal.",
   },
   {
-    key: "onesignal-work",
-    label: "OneSignal Product Releases",
-    blurb: "Shipped product design work across the platform.",
+    key: "personal",
+    label: "Personal AI Projects",
+    blurb: "Apps, games, and experiments I build for myself.",
   },
 ];
 

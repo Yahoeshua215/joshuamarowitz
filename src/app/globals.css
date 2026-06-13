@@ -556,8 +556,8 @@ details[open] .chevron {
 }
 
 .mission-index {
-  color: var(--c);
-  text-shadow: 0 0 12px color-mix(in srgb, var(--c) 60%, transparent);
+  color: var(--num, var(--c));
+  text-shadow: 0 0 12px color-mix(in srgb, var(--num, var(--c)) 60%, transparent);
 }
 
 /* Slowly rotating targeting reticle */

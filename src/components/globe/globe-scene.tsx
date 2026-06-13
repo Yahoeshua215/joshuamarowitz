@@ -116,6 +116,11 @@ export default function GlobeScene({
   // releases (the shipped design work it pairs with).
   const releasesFocused = active.size === 1 && active.has("onesignal-work");
 
+  // When a single section is in focus, the corner return-widget shows that
+  // section's avatar; otherwise it falls back to the default idle avatar.
+  const soloCategory: Project["category"] | null =
+    active.size === 1 ? [...active][0] : null;
+
   // Default to the dark (night) side until the theme resolves on the client.
   const night = resolvedTheme !== "light";
   const background = night ? "#05070d" : "#0a1326";
@@ -186,7 +191,7 @@ export default function GlobeScene({
       </Canvas>
       </div>
 
-      <MissionControlReturn onReturn={handleReturn} />
+      <MissionControlReturn onReturn={handleReturn} focus={soloCategory} />
 
       <GlobeLegend
         count={visibleProjects.length}

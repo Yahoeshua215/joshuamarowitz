@@ -11,7 +11,15 @@ import {
   useRef,
   useState,
 } from "react";
-import { MODEL_DANCE_URL, MODEL_IDLE_URL, MODEL_RUN_URL } from "./avatar-model";
+import {
+  MODEL_DANCE_URL,
+  MODEL_IDLE_URL,
+  MODEL_ONESIGNAL_URL,
+  MODEL_PERSONAL_DANCE_URL,
+  MODEL_PERSONAL_RUN_URL,
+  MODEL_PERSONAL_URL,
+  MODEL_RUN_URL,
+} from "./avatar-model";
 import { BIO, LINKEDIN_URL, NAME, ROLE } from "./landing-data";
 import { MissionSelect, type MissionLaunch } from "./mission-select";
 
@@ -157,6 +165,11 @@ export function LandingCanvas() {
     (next: "run" | "dance") => setPose((p) => (p === next ? "idle" : next)),
     []
   );
+  // Which mission card is hovered. Hovering "Personal AI Projects" swaps in a
+  // dedicated avatar; leaving the card reverts to the selected pose.
+  const [hoverMission, setHoverMission] = useState<string | null>(null);
+  const hoveringPersonal = hoverMission === "personal";
+  const hoveringOnesignal = hoverMission === "onesignal";
   // Non-null while the pivot-to-orbit transition is playing.
   const [launch, setLaunch] = useState<MissionLaunch | null>(null);
   // True while the modal "pans back in" after returning from the orbit view.
@@ -440,7 +453,7 @@ export function LandingCanvas() {
           <div className="order-2 flex flex-col gap-5 md:order-1">
             <div>
               <Label>Select a mission</Label>
-              <MissionSelect onLaunch={handleLaunch} />
+              <MissionSelect onLaunch={handleLaunch} onHover={setHoverMission} />
             </div>
             <div>
               <Label>Toolkit</Label>
@@ -462,11 +475,19 @@ export function LandingCanvas() {
               <LandingScene
                 key={avatarNonce}
                 modelUrl={
-                  pose === "run"
-                    ? MODEL_RUN_URL
-                    : pose === "dance"
-                      ? MODEL_DANCE_URL
-                      : MODEL_IDLE_URL
+                  hoveringPersonal
+                    ? pose === "run"
+                      ? MODEL_PERSONAL_RUN_URL
+                      : pose === "dance"
+                        ? MODEL_PERSONAL_DANCE_URL
+                        : MODEL_PERSONAL_URL
+                    : hoveringOnesignal
+                      ? MODEL_ONESIGNAL_URL
+                      : pose === "run"
+                        ? MODEL_RUN_URL
+                        : pose === "dance"
+                          ? MODEL_DANCE_URL
+                          : MODEL_IDLE_URL
                 }
               />
 

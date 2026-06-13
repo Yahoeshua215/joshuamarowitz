@@ -9,6 +9,13 @@ import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.j
 export const MODEL_IDLE_URL = "/me/super-josh.glb";
 export const MODEL_RUN_URL = "/me/model-run.glb";
 export const MODEL_DANCE_URL = "/me/model-dance.glb";
+// Shown only while the user hovers the "Personal AI Projects" mission card.
+// The run/dance variants are used when hovering while that pose is active.
+export const MODEL_PERSONAL_URL = "/me/personal-avatar.glb";
+export const MODEL_PERSONAL_RUN_URL = "/me/personal-run.glb";
+export const MODEL_PERSONAL_DANCE_URL = "/me/personal-dance.glb";
+// Shown while hovering the "OneSignal AI Projects" mission card.
+export const MODEL_ONESIGNAL_URL = "/me/onesignal-ai.glb";
 // How long the turntable stays paused after the user lets go of a drag.
 const RESUME_DELAY_MS = 1500;
 
@@ -121,3 +128,7 @@ export function AvatarModel({ url }: { url: string }) {
 useGLTF.preload(MODEL_IDLE_URL);
 useGLTF.preload(MODEL_RUN_URL);
 useGLTF.preload(MODEL_DANCE_URL);
+useGLTF.preload(MODEL_PERSONAL_URL);
+useGLTF.preload(MODEL_PERSONAL_RUN_URL);
+useGLTF.preload(MODEL_PERSONAL_DANCE_URL);
+useGLTF.preload(MODEL_ONESIGNAL_URL);
