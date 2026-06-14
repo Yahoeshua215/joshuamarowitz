@@ -15,7 +15,12 @@
   "links": {
     "video": "https://share.zight.com/7KunZl8z"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/journey-audience-activity/screenshot.png",
+      "alt": "Audience Activity for Journey Messages screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

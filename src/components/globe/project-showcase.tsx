@@ -1,7 +1,13 @@
 "use client";
 
-import { ArrowUpRight, ExternalLink, Play, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { ExternalLink, Maximize2, Play, X } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -19,23 +25,6 @@ const linkLabels: Record<string, string> = {
 
 type PrimaryKind = "live" | "video" | "github" | "figma";
 
-const primaryMeta: Record<
-  PrimaryKind,
-  { label: string; overlay: string; icon: "open" | "play" }
-> = {
-  live: { label: "Open live site", overlay: "Open project", icon: "open" },
-  video: { label: "Watch walkthrough", overlay: "Watch walkthrough", icon: "play" },
-  github: { label: "View source", overlay: "View source", icon: "open" },
-  figma: { label: "Open in Figma", overlay: "Open in Figma", icon: "open" },
-};
-
-function hostOf(url: string) {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return url.replace(/^https?:\/\//, "");
-  }
-}
 
 function Corner({
   pos,
@@ -147,7 +136,6 @@ export function ProjectShowcase({
     primaryKind = "figma";
     primaryUrl = links.figma;
   }
-  const primary = primaryKind ? primaryMeta[primaryKind] : null;
 
   // Secondary links exclude whatever became the hero CTA above.
   const secondaryLinks = Object.entries(links).filter(
@@ -157,6 +145,7 @@ export function ProjectShowcase({
   const panelRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -166,11 +155,14 @@ export function ProjectShowcase({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key !== "Escape") return;
+      // Esc closes the lightbox first (if open), otherwise the whole modal.
+      if (lightboxOpen) setLightboxOpen(false);
+      else onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [onClose, lightboxOpen]);
 
   const handleMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     const el = panelRef.current;
@@ -201,8 +193,10 @@ export function ProjectShowcase({
     if (glowRef.current) glowRef.current.style.opacity = "0";
   }, []);
 
-  const hasContext = Boolean(
-    project.caseStudy || project.tags.length > 0 || secondaryLinks.length > 0
+  // Side context = the right column (case study + secondary links). The Stack
+  // (tags) runs full-width across the bottom instead, so it's tracked apart.
+  const hasSideContext = Boolean(
+    project.caseStudy || secondaryLinks.length > 0
   );
 
   const hud = (
@@ -281,7 +275,7 @@ export function ProjectShowcase({
           {/* Body — preview left, context right */}
           <div
             className={`grid gap-6 px-6 py-6 sm:px-8 md:gap-8 ${
-              hasContext ? "md:grid-cols-[minmax(0,1fr)_300px]" : ""
+              hasSideContext ? "md:grid-cols-[minmax(0,1fr)_300px]" : ""
             }`}
           >
             {/* Preview */}
@@ -332,25 +326,15 @@ export function ProjectShowcase({
                       <span className="h-2 w-2 rounded-full bg-white/15" />
                     </div>
 
-                    {/* Hover overlay CTA (only when there's a screenshot to click through) */}
-                    {primary && shot && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/35 group-hover:opacity-100">
-                        <span
-                          className="inline-flex items-center gap-1.5 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] backdrop-blur-sm"
-                          style={{
-                            borderColor: accent,
-                            color: accent,
-                            boxShadow: `0 0 18px ${accent}55`,
-                          }}
-                        >
-                          {primary.overlay}
-                          {primary.icon === "play" ? (
-                            <Play className="h-3.5 w-3.5" />
-                          ) : (
-                            <ArrowUpRight className="h-3.5 w-3.5" />
-                          )}
-                        </span>
-                      </div>
+                    {/* Zoom affordance — only when there's a screenshot to enlarge */}
+                    {shot && (
+                      <span
+                        className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-md border bg-black/50 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100"
+                        style={{ borderColor: `${accent}66`, color: accent }}
+                      >
+                        <Maximize2 className="h-3 w-3" />
+                        Expand
+                      </span>
                     )}
                   </>
                 );
@@ -358,6 +342,22 @@ export function ProjectShowcase({
                 const previewClass =
                   "group relative block overflow-hidden rounded-xl border border-white/10 bg-black/40";
                 const previewStyle = { boxShadow: `inset 0 0 40px ${accent}10` };
+
+                // A real screenshot opens a lightbox; otherwise the placeholder
+                // links out to the primary destination (e.g. a video walkthrough).
+                if (shot) {
+                  return (
+                    <button
+                      type="button"
+                      onClick={() => setLightboxOpen(true)}
+                      aria-label="Enlarge screenshot"
+                      className={`${previewClass} w-full cursor-zoom-in text-left`}
+                      style={previewStyle}
+                    >
+                      {PreviewInner}
+                    </button>
+                  );
+                }
 
                 return primaryUrl ? (
                   <a
@@ -375,31 +375,10 @@ export function ProjectShowcase({
                   </div>
                 );
               })()}
-
-              {primary && primaryUrl && (
-                <a
-                  href={primaryUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors hover:bg-white/5"
-                  style={{ borderColor: `${accent}66`, color: accent }}
-                >
-                  {primary.icon === "play" ? (
-                    <Play className="h-4 w-4" />
-                  ) : null}
-                  {primary.label}
-                  {primary.icon === "open" ? (
-                    <ExternalLink className="h-4 w-4" />
-                  ) : null}
-                  <span className="ml-0.5 truncate font-mono text-[11px] lowercase tracking-normal text-white/40">
-                    {hostOf(primaryUrl)}
-                  </span>
-                </a>
-              )}
             </div>
 
             {/* Context */}
-            {hasContext && (
+            {hasSideContext && (
               <div className="flex flex-col gap-5">
                 {project.caseStudy && (
                   <>
@@ -421,27 +400,6 @@ export function ProjectShowcase({
                   </>
                 )}
 
-                {project.tags.length > 0 && (
-                  <div>
-                    <p
-                      className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em]"
-                      style={{ color: `${accent}99` }}
-                    >
-                      Stack
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-white/65"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
                 {secondaryLinks.length > 0 && (
                   <div className="flex flex-wrap gap-2">
                     {secondaryLinks.map(([key, url]) => (
@@ -461,8 +419,56 @@ export function ProjectShowcase({
               </div>
             )}
           </div>
+
+          {/* Stack — full-width row across the bottom */}
+          {project.tags.length > 0 && (
+            <div className="border-t border-white/10 px-6 py-5 sm:px-8">
+              <p
+                className="mb-2 font-mono text-[10px] uppercase tracking-[0.3em]"
+                style={{ color: `${accent}99` }}
+              >
+                Stack
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-white/65"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Lightbox — click a screenshot to view it full size */}
+      {shot && lightboxOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} — enlarged screenshot`}
+          onClick={() => setLightboxOpen(false)}
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-10"
+        >
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={() => setLightboxOpen(false)}
+            className="absolute right-4 top-4 rounded-md border border-white/15 bg-white/5 p-1.5 text-white/70 transition-colors hover:text-white"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={shot.src}
+            alt={shot.alt}
+            className="max-h-[92vh] max-w-[94vw] cursor-zoom-out rounded-lg border border-white/10 object-contain shadow-2xl"
+          />
+        </div>
+      )}
     </div>
   );
 

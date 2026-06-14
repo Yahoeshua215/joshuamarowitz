@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { LogWeek } from "@/lib/log/types";
 import { Project } from "@/lib/store/types";
 
 const GlobeScene = dynamic(() => import("./globe-scene"), {
@@ -18,10 +19,18 @@ const GlobeScene = dynamic(() => import("./globe-scene"), {
 
 export function GlobeCanvas({
   projects,
+  logWeeks = [],
   initialFocus = null,
 }: {
   projects: Project[];
+  logWeeks?: LogWeek[];
   initialFocus?: Project["category"] | null;
 }) {
-  return <GlobeScene projects={projects} initialFocus={initialFocus} />;
+  return (
+    <GlobeScene
+      projects={projects}
+      logWeeks={logWeeks}
+      initialFocus={initialFocus}
+    />
+  );
 }

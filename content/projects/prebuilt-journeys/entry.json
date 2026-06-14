@@ -15,7 +15,12 @@
   "links": {
     "video": "https://www.loom.com/share/e231fe274a04425d89b3f19639a78382"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/prebuilt-journeys/screenshot.png",
+      "alt": "Pre-built Journeys screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

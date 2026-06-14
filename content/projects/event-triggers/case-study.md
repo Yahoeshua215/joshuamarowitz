@@ -14,4 +14,3 @@ Owned the event-trigger settings flow and pressure-tested four property-editing 
 
 - [Event Trigger UX flow](https://share.zight.com/ApuolN2R)
 - [4 property-editing versions](https://share.zight.com/6quA8qOp)
-- [Entrance-node concept](https://share.zight.com/nOu4bexo)

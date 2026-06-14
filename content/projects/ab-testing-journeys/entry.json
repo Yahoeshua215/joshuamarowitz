@@ -16,7 +16,12 @@
   "links": {
     "video": "https://share.zight.com/eDuO4PR6"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/ab-testing-journeys/screenshot.png",
+      "alt": "A/B Testing in Journeys screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

@@ -12,10 +12,13 @@
   "dateEnd": "2025-08-28",
   "summary": "Let users set a measurable goal (e.g., CTR/clicks) against a journey without bloating journey settings.",
   "status": "shipped",
-  "links": {
-    "video": "https://share.zight.com/bLuPJ1ze"
-  },
-  "images": [],
+  "links": {},
+  "images": [
+    {
+      "src": "/projects/journey-goals/screenshot.png",
+      "alt": "Journey Goals screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

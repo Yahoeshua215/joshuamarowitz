@@ -4,6 +4,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { MutableRefObject, useEffect, useRef } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { Project } from "@/lib/store/types";
 import { getOrbitParams, orbitPosition } from "./orbits";
 import { useGlobeStore } from "./use-globe-store";
 
@@ -14,6 +15,7 @@ const UP_OFFSET = new THREE.Vector3(0, 0.25, 0);
 type CameraRigProps = {
   controlsRef: MutableRefObject<OrbitControlsImpl | null>;
   timeRef: MutableRefObject<number>;
+  projects: Project[];
 };
 
 /**
@@ -21,9 +23,16 @@ type CameraRigProps = {
  * default view. When idle, it releases control entirely so OrbitControls can
  * freely orbit/spin the globe.
  */
-export function CameraRig({ controlsRef, timeRef }: CameraRigProps) {
+export function CameraRig({ controlsRef, timeRef, projects }: CameraRigProps) {
   const { camera } = useThree();
   const { selectedSlug } = useGlobeStore();
+
+  const categoryBySlug = useRef(
+    new Map(projects.map((project) => [project.slug, project.category]))
+  );
+  categoryBySlug.current = new Map(
+    projects.map((project) => [project.slug, project.category])
+  );
 
   const modeRef = useRef<"idle" | "select" | "return">("idle");
   const desiredCam = useRef(new THREE.Vector3());
@@ -61,8 +70,9 @@ export function CameraRig({ controlsRef, timeRef }: CameraRigProps) {
     }
 
     if (modeRef.current === "select" && selectedSlug) {
+      const category = categoryBySlug.current.get(selectedSlug) ?? "personal";
       orbitPosition(
-        getOrbitParams(selectedSlug),
+        getOrbitParams(selectedSlug, category),
         timeRef.current,
         satPos.current
       );

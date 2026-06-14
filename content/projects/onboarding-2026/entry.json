@@ -15,7 +15,12 @@
   "links": {
     "video": "https://share.zight.com/qGuWQqvv"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/onboarding-2026/screenshot.png",
+      "alt": "Onboarding screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

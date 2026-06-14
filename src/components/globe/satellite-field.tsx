@@ -7,6 +7,7 @@ import * as THREE from "three";
 import { Project } from "@/lib/store/types";
 import {
   categoryColor,
+  EARTH_RADIUS,
   getOrbitParams,
   orbitPointAtAngle,
   orbitPosition,
@@ -14,8 +15,11 @@ import {
 import { globeStore, useGlobeStore } from "./use-globe-store";
 
 const RING_SEGMENTS = 96;
-// How close (in screen pixels) the cursor must get to a dot to "hover" it.
-const HOVER_PX = 34;
+// Screen-space radius (px) for hover + click hit-testing around each dot. Kept
+// generous so you can target a satellite from anywhere in/around it; the field
+// always resolves to the *nearest* dot within range, so a wide zone stays
+// unambiguous even where orbits cluster.
+const TARGET_PX = 120;
 // Pointer travel beyond this (px) between down/up counts as a drag, not a click.
 const CLICK_SLOP = 6;
 
@@ -61,7 +65,7 @@ function OrbitRings({ projects }: { projects: Project[] }) {
     const ring: THREE.Vector3[] = [];
 
     for (const project of projects) {
-      const params = getOrbitParams(project.slug);
+      const params = getOrbitParams(project.slug, project.category);
       ring.length = 0;
       for (let i = 0; i <= RING_SEGMENTS; i++) {
         const angle = (i / RING_SEGMENTS) * Math.PI * 2;
@@ -101,43 +105,85 @@ function OrbitRings({ projects }: { projects: Project[] }) {
 
 /**
  * Purely visual dot: a crisp colored core, a soft glow halo, and (when active)
- * a leader line extending out to its label. It carries NO pointer handlers, so
- * it never intercepts drags meant for OrbitControls — hover and click are
- * resolved by the parent via screen-space proximity instead.
+ * a leader line out to its clickable label. The dot itself carries NO pointer
+ * handlers — hover/click on the dot are resolved via screen-space proximity on
+ * the canvas — but the label is a real button so it can be clicked directly.
  */
 function SatelliteDot({
   project,
   timeRef,
   glow,
-  active,
+  isHovered,
+  isSelected,
 }: {
   project: Project;
   timeRef: MutableRefObject<number>;
   glow: THREE.Texture;
-  active: boolean;
+  isHovered: boolean;
+  isSelected: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const haloRef = useRef<THREE.Sprite>(null);
   const coreRef = useRef<THREE.Mesh>(null);
-  const params = useRef(getOrbitParams(project.slug)).current;
+  const params = useRef(getOrbitParams(project.slug, project.category)).current;
   const color = useMemo(
     () => categoryColor(project.category),
     [project.category]
   );
+  // Hysteresis ref + scratch vectors for the in-front-of-globe test. It runs in
+  // the frame loop and feeds the WebGL emphasis directly — never React state —
+  // so dots brighten as they pass in front of the globe with zero re-render.
+  const inFrontRef = useRef(false);
+  const viewDir = useRef(new THREE.Vector3());
+  const perp = useRef(new THREE.Vector3());
 
-  useFrame(() => {
+  // Labels render via drei <Html> (a DOM overlay re-synced every frame), so only
+  // one ever mounts — on hover/select, never passively — which keeps it smooth.
+  const showLabel = isHovered || isSelected;
+  const highlighted = isHovered || isSelected;
+
+  useFrame((state) => {
     if (groupRef.current) {
       orbitPosition(params, timeRef.current, groupRef.current.position);
     }
+
+    // Brighten dots passing in front of the globe. Computed here and applied
+    // straight to the halo/core below — no setState, so no re-render churn.
+    let inFront = false;
+    if (groupRef.current && !isSelected && !globeStore.getSnapshot().paused) {
+      const satPos = groupRef.current.position;
+      const camDist = state.camera.position.length();
+      viewDir.current.copy(state.camera.position).multiplyScalar(-1).normalize();
+      const depth =
+        satPos.dot(viewDir.current) -
+        state.camera.position.dot(viewDir.current);
+      const nearSide = depth > 0 && depth < camDist;
+      perp.current
+        .copy(viewDir.current)
+        .multiplyScalar(satPos.dot(viewDir.current))
+        .subVectors(satPos, perp.current);
+      const perpDist = perp.current.length();
+      // Hysteresis so a dot grazing the edge doesn't flicker on/off.
+      const overlaps = inFrontRef.current
+        ? perpDist < EARTH_RADIUS * 1.15
+        : perpDist < EARTH_RADIUS * 0.95;
+      inFront = nearSide && overlaps;
+    }
+    inFrontRef.current = inFront;
+
     if (haloRef.current) {
-      const target = active ? 0.17 : 0.085;
+      const target = highlighted ? 0.17 : inFront ? 0.11 : 0.085;
       const next = THREE.MathUtils.lerp(haloRef.current.scale.x, target, 0.18);
       haloRef.current.scale.setScalar(next);
       const mat = haloRef.current.material as THREE.SpriteMaterial;
-      mat.opacity = THREE.MathUtils.lerp(mat.opacity, active ? 1 : 0.7, 0.18);
+      mat.opacity = THREE.MathUtils.lerp(
+        mat.opacity,
+        highlighted ? 1 : inFront ? 0.85 : 0.7,
+        0.18
+      );
     }
     if (coreRef.current) {
-      const target = active ? 0.022 : 0.015;
+      const target = highlighted ? 0.022 : inFront ? 0.018 : 0.015;
       const next = THREE.MathUtils.lerp(coreRef.current.scale.x, target, 0.2);
       coreRef.current.scale.setScalar(next);
     }
@@ -164,16 +210,21 @@ function SatelliteDot({
         />
       </sprite>
 
-      {active && (
-        <Html
-          position={[0, 0, 0]}
-          zIndexRange={[40, 0]}
-          style={{ pointerEvents: "none" }}
-        >
-          <div className="sat-leader" style={{ "--c": color } as React.CSSProperties}>
-            <span className="sat-leader-line" />
+      {showLabel && (
+        <Html position={[0, 0, 0]} zIndexRange={[40, 0]}>
+          <button
+            type="button"
+            className={`sat-leader-hit ${highlighted ? "" : "sat-leader-pass"}`}
+            style={{ "--c": color } as React.CSSProperties}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              globeStore.select(project.slug);
+            }}
+          >
+            <span className="sat-leader-line" aria-hidden />
             <span className="sat-leader-label">{project.title}</span>
-          </div>
+          </button>
         </Html>
       )}
     </group>
@@ -201,12 +252,19 @@ export function SatelliteField({
   const size = useThree((s) => s.size);
 
   const { selectedSlug } = useGlobeStore();
+  // Hover lives in local state, not the global store — routing it through the
+  // store re-renders the whole scene (globe + camera rig) on every cursor move,
+  // which makes hovering feel laggy/sticky. Local state keeps it snappy.
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const hoveredRef = useRef<string | null>(null);
 
   // Stable per-dot orbit params for hit-testing.
   const metas = useMemo(
-    () => projects.map((p) => ({ slug: p.slug, params: getOrbitParams(p.slug) })),
+    () =>
+      projects.map((p) => ({
+        slug: p.slug,
+        params: getOrbitParams(p.slug, p.category),
+      })),
     [projects]
   );
 
@@ -270,7 +328,7 @@ export function SatelliteField({
     }
 
     let best: string | null = null;
-    let bestDist = HOVER_PX;
+    let bestDist = TARGET_PX;
     if (pointer.current.inside) {
       for (const meta of metas) {
         orbitPosition(meta.params, timeRef.current, projected);
@@ -310,7 +368,8 @@ export function SatelliteField({
           project={project}
           timeRef={timeRef}
           glow={glow}
-          active={hoveredSlug === project.slug || selectedSlug === project.slug}
+          isHovered={hoveredSlug === project.slug}
+          isSelected={selectedSlug === project.slug}
         />
       ))}
     </group>

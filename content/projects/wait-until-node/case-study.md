@@ -13,6 +13,4 @@ Prototyped an event-aware wait node that lets journeys hold for real customer ac
 **Walkthroughs:**
 
 - [Quick prototype walkthrough](https://share.zight.com/7KulYvZd)
-- [New UI working](https://share.zight.com/QwurxDvE)
 - [Message-selection issue](https://share.zight.com/kpuxBE9k)
-- [Event-list link in node](https://share.zight.com/bLu2L9ON)

@@ -12,7 +12,5 @@ Prototyped a filterable events index — including a live v0 build — that fram
 
 **Walkthroughs:**
 
-- [Goals/insights WIP prototype](https://share.zight.com/z8uWNXrG)
 - [PRD-driven v0 exploration](https://share.zight.com/NQum1801)
-- [Filter scope](https://share.zight.com/9ZuOBAbD)
 - [Updated look](https://share.zight.com/7Kulpm9B)

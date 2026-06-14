@@ -12,5 +12,4 @@ Designed the RBAC and audit-log interfaces and aligned stakeholders on the acces
 
 **Walkthroughs:**
 
-- [RBAC UX/UI](https://share.zight.com/6qu44QA0)
 - [Audit-log UI walkthrough](https://share.zight.com/5zulJQme)

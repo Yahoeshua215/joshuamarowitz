@@ -7,6 +7,7 @@ export type MissionCategory = {
 };
 
 // Maps the three landing entry points onto the existing satellite categories.
+// Order matches mission cards 01→03 on the HUD (Releases, OneSignal AI, Personal).
 export const MISSIONS: MissionCategory[] = [
   {
     key: "onesignal-work",
@@ -24,6 +25,11 @@ export const MISSIONS: MissionCategory[] = [
     blurb: "Apps, games, and experiments I build for myself.",
   },
 ];
+
+/** Canonical section order — shared by the HUD, legend, drawer, and orbit sectors. */
+export const MISSION_CATEGORY_ORDER: Project["category"][] = MISSIONS.map(
+  (mission) => mission.key
+);
 
 // Cycled through the scramble/decrypt ticker in the toolkit.
 export const SCRAMBLE_TOOLS: string[] = [
@@ -94,10 +100,7 @@ export const ROLE = "Staff Product Designer · AI Practitioner";
 export const CURRENT = "currently at onesignal.com";
 
 // External profile links.
-// LinkedIn lives in the home HUD header; Dribbble surfaces in the orbit view
-// when focused on the OneSignal product-release work.
 export const LINKEDIN_URL = "https://www.linkedin.com/in/joshua-marowitz-59338389/";
-export const DRIBBBLE_URL = "https://dribbble.com/jmaro/shots";
 
 // Proficiency bars (bottom-left "system stats")
 export type CoreStat = { label: string; value: number };

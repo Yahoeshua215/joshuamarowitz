@@ -904,13 +904,19 @@ details[open] .chevron {
 }
 
 /* ── Satellite dot field: leader line + extended label on hover ───────────── */
-.sat-leader {
+.sat-leader-hit {
   display: flex;
   align-items: center;
   transform: translateY(-50%);
   white-space: nowrap;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
+  margin: 0;
+  padding: 0.7rem 1rem 0.7rem 0.4rem;
+  border: 0;
+  background: transparent;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .sat-leader-line {
@@ -930,9 +936,13 @@ details[open] .chevron {
 
 .sat-leader-label {
   margin-left: 9px;
-  padding: 0;
+  padding: 0.15rem 0.25rem;
+  min-height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
   border: 0;
   background: transparent;
+  pointer-events: none;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 500;
@@ -946,8 +956,16 @@ details[open] .chevron {
   animation: sat-leader-fade 0.3s ease-out 0.1s both;
 }
 
-.sat-leader-label:hover {
+.sat-leader-hit:hover .sat-leader-label {
   color: #fff;
+}
+
+.sat-leader-pass .sat-leader-line {
+  opacity: 0.72;
+}
+
+.sat-leader-pass .sat-leader-label {
+  color: rgba(255, 255, 255, 0.72);
 }
 
 @keyframes sat-leader-grow {
@@ -974,5 +992,76 @@ details[open] .chevron {
   .sat-leader-line,
   .sat-leader-label {
     animation: none;
+  }
+}
+
+/* ── Orbit page header controls (Projects + Operator's Log) ─────────────── */
+.orbit-header-rail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  max-width: calc(100vw - 2.5rem);
+  padding: 0.3rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(4, 8, 14, 0.72);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.orbit-header-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2.25rem;
+  min-width: 0;
+  padding: 0 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.orbit-header-btn:hover {
+  border-color: rgba(94, 224, 200, 0.35);
+  background: rgba(94, 224, 200, 0.08);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 16px rgba(94, 224, 200, 0.1);
+}
+
+.orbit-header-btn-label {
+  white-space: nowrap;
+}
+
+.orbit-header-btn kbd {
+  margin-left: 0.15rem;
+  flex: none;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.1rem 0.3rem;
+  font-size: 8px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+@media (max-width: 420px) {
+  .orbit-header-btn {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding-inline: 0.4rem;
   }
 }

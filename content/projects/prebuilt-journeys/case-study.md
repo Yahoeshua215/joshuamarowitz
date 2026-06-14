@@ -13,6 +13,4 @@ Shipped a guided template-entry experience that replaced the blank canvas with r
 **Walkthroughs:**
 
 - [Loom — thinking/vision walkthrough](https://www.loom.com/share/e231fe274a04425d89b3f19639a78382)
-- [Empty-state vision wire](https://share.zight.com/yAuebAYy)
 - [Pre-built cards exploration](https://share.zight.com/RBuRlNkA)
-- [Collapse / secondary-button options](https://share.zight.com/GGuekYY2)

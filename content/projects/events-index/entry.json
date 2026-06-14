@@ -13,10 +13,13 @@
   "dateEnd": "2025-04-28",
   "summary": "A browsable event + storage index with filters, date ranges, and goals/insights.",
   "status": "shipped",
-  "links": {
-    "video": "https://share.zight.com/z8uWNXrG"
-  },
-  "images": [],
+  "links": {},
+  "images": [
+    {
+      "src": "/projects/events-index/screenshot.png",
+      "alt": "Events Index / Storage screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

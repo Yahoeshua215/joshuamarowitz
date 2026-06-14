@@ -14,7 +14,12 @@
   "links": {
     "video": "https://share.zight.com/8LuEl9NE"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/integrations-dashboard/screenshot.png",
+      "alt": "Integrations Dashboard screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

@@ -21,7 +21,7 @@ type SatelliteProps = {
 export function Satellite({ project, timeRef }: SatelliteProps) {
   const groupRef = useRef<THREE.Group>(null);
   const bodyRef = useRef<THREE.Group>(null);
-  const params = useRef(getOrbitParams(project.slug)).current;
+  const params = useRef(getOrbitParams(project.slug, project.category)).current;
   const color = categoryColor(project.category);
   const [hovered, setHovered] = useState(false);
   // Whether the satellite is currently passing in front of the Earth's disk.

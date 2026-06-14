@@ -12,9 +12,7 @@
   "dateEnd": "2024-02-28",
   "summary": "Let customers export OneSignal data to their warehouse via Fivetran-powered connectors.",
   "status": "shipped",
-  "links": {
-    "video": "https://share.zight.com/Z4uEjL7e"
-  },
+  "links": {},
   "images": [],
   "featured": false,
   "order": 0

@@ -2,12 +2,12 @@
 
 import { OrbitControls, Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Dribbble } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { DRIBBBLE_URL } from "@/components/landing/landing-data";
+import { MISSION_CATEGORY_ORDER } from "@/components/landing/landing-data";
+import { LogWeek } from "@/lib/log/types";
 import { Project } from "@/lib/store/types";
 
 // Time the reverse "pan back to mission control" plays before routing home.
@@ -23,20 +23,18 @@ function SceneReady({ onReady }: { onReady: () => void }) {
   return null;
 }
 import { CameraRig } from "./camera-rig";
+import { CaptainsLog } from "./captains-log";
 import { Earth } from "./earth";
 import { GlobeDrawer } from "./globe-drawer";
 import { GlobeLegend } from "./globe-legend";
 import { MissionControlReturn } from "./mission-control-return";
+import { OrbitHeaderRail } from "./orbit-header-rail";
 import { ProjectShowcase } from "./project-showcase";
 import { SatelliteField } from "./satellite-field";
 import { Satellites } from "./satellites";
 import { globeStore, useGlobeStore } from "./use-globe-store";
 
-const ALL_CATEGORIES: Project["category"][] = [
-  "personal",
-  "onesignal",
-  "onesignal-work",
-];
+const ALL_CATEGORIES = MISSION_CATEGORY_ORDER;
 
 // Orbit visualization style. "dots" is the new glowing-dot + leader-line field;
 // "models" is the original modeled satellites, kept around (tucked away) so we
@@ -45,9 +43,11 @@ const ORBIT_STYLE: "dots" | "models" = "dots";
 
 export default function GlobeScene({
   projects,
+  logWeeks = [],
   initialFocus = null,
 }: {
   projects: Project[];
+  logWeeks?: LogWeek[];
   initialFocus?: Project["category"] | null;
 }) {
   const router = useRouter();
@@ -111,10 +111,6 @@ export default function GlobeScene({
     () => projects.filter((p) => active.has(p.category)),
     [projects, active]
   );
-
-  // Surface the Dribbble link only while focused on the OneSignal product
-  // releases (the shipped design work it pairs with).
-  const releasesFocused = active.size === 1 && active.has("onesignal-work");
 
   // When a single section is in focus, the corner return-widget shows that
   // section's avatar; otherwise it falls back to the default idle avatar.
@@ -187,7 +183,7 @@ export default function GlobeScene({
           autoRotate={!paused}
           autoRotateSpeed={0.35}
         />
-        <CameraRig controlsRef={controlsRef} timeRef={timeRef} />
+        <CameraRig controlsRef={controlsRef} timeRef={timeRef} projects={projects} />
       </Canvas>
       </div>
 
@@ -198,19 +194,10 @@ export default function GlobeScene({
         active={active}
         onToggle={toggleCategory}
       />
-      <GlobeDrawer projects={visibleProjects} />
-
-      {releasesFocused && (
-        <a
-          href={DRIBBBLE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group absolute bottom-5 right-5 z-10 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70 backdrop-blur-sm transition-colors hover:border-[#ea4c89]/60 hover:text-[#ea4c89]"
-        >
-          <Dribbble className="h-3.5 w-3.5" />
-          Design shots
-        </a>
-      )}
+      <OrbitHeaderRail>
+        <GlobeDrawer projects={visibleProjects} />
+        <CaptainsLog weeks={logWeeks} />
+      </OrbitHeaderRail>
       </div>
 
       {modalProject && (

@@ -14,5 +14,4 @@ Prototyped a OneSignal copilot, an AI-led dashboard, and an MCP-connected agent 
 
 - [OneSignal AI agent via Slack (video)](https://share.zight.com/eDuOmjxY)
 - [Versions overview video](https://share.zight.com/6qu4dbEn)
-- [AI empty-state dashboard concept](https://share.zight.com/o0udjg0w)
 - [AskUserQuestions journey creation](https://share.zight.com/Bluwvv4A)

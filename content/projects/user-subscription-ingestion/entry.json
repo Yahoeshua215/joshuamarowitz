@@ -15,7 +15,12 @@
   "links": {
     "video": "https://share.zight.com/jkuk5OAr"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/user-subscription-ingestion/screenshot.png",
+      "alt": "User & Subscription Ingestion screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

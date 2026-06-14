@@ -13,5 +13,3 @@ Designed end-to-end A/B testing for journeys and elevated automatic winner selec
 **Walkthroughs:**
 
 - [Zight — 9-min v0 UX/UI walkthrough](https://share.zight.com/eDuO4PR6)
-- [Early authoring wires](https://share.zight.com/Apu2W0Ov)
-- [Variant](https://share.zight.com/p9umyDzP)

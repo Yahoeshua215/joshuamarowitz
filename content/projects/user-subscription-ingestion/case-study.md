@@ -13,5 +13,3 @@ Prototyped ingestion with run-level visibility and rejected-record filtering so 
 **Walkthroughs:**
 
 - [High-level flow prototype](https://share.zight.com/jkuk5OAr)
-- [Rejected-record filtering](https://share.zight.com/E0uvkrZl)
-- [View-records UX](https://share.zight.com/X6u6pddK)

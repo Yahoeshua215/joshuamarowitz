@@ -14,7 +14,12 @@
   "links": {
     "video": "https://www.loom.com/share/a2e191c26ca34881ab6c2ca7982b2af9"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/multi-branching/screenshot.png",
+      "alt": "Multi-branching screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

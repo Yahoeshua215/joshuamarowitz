@@ -1,14 +1,9 @@
 "use client";
 
+import { MISSION_CATEGORY_ORDER } from "@/components/landing/landing-data";
 import { Project } from "@/lib/store/types";
 import { categoryLabel } from "@/lib/utils";
 import { categoryColor } from "./orbits";
-
-const CATEGORIES: Project["category"][] = [
-  "personal",
-  "onesignal",
-  "onesignal-work",
-];
 
 export function GlobeLegend({
   count,
@@ -24,7 +19,7 @@ export function GlobeLegend({
       <div className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-sm">
         <p className="mb-2 text-white/50">{count} satellites in orbit</p>
         <div className="space-y-1.5">
-          {CATEGORIES.map((category) => (
+          {MISSION_CATEGORY_ORDER.map((category) => (
             <LegendRow
               key={category}
               color={categoryColor(category)}

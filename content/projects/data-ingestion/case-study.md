@@ -12,6 +12,5 @@ Designed a source/destination model and sync index that made data flow into OneS
 
 **Walkthroughs:**
 
-- [Destination call-out question](https://share.zight.com/P8uz0Bmn)
 - [Source-row click behavior](https://share.zight.com/wbudZ9Pp)
 - [Preferred version](https://share.zight.com/Apuo0DkX)

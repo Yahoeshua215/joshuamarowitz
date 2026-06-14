@@ -15,7 +15,12 @@
   "links": {
     "video": "https://share.zight.com/ApuolN2R"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/event-triggers/screenshot.png",
+      "alt": "Event Triggers screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }

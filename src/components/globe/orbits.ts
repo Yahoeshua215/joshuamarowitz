@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MISSION_CATEGORY_ORDER } from "@/components/landing/landing-data";
 import { Project } from "@/lib/store/types";
 
 export const EARTH_RADIUS = 1;
@@ -28,11 +29,26 @@ function seeded(value: string, salt: number): number {
 
 const SHELLS = [1.55, 1.9, 2.25, 2.6];
 
-export function getOrbitParams(slug: string): OrbitParams {
+// Orbital wedge around the globe for each mission section, in HUD card order.
+const CATEGORY_ASCENDING_NODES = MISSION_CATEGORY_ORDER.map(
+  (_, index) => (index * (2 * Math.PI)) / MISSION_CATEGORY_ORDER.length
+);
+
+function categoryIndex(category: Project["category"]): number {
+  const index = MISSION_CATEGORY_ORDER.indexOf(category);
+  return index >= 0 ? index : 0;
+}
+
+export function getOrbitParams(
+  slug: string,
+  category: Project["category"]
+): OrbitParams {
   const shell = SHELLS[hashString(slug) % SHELLS.length];
   const radius = shell + seeded(slug, 1) * 0.12;
   const inclination = (seeded(slug, 2) - 0.5) * Math.PI * 0.9;
-  const ascendingNode = seeded(slug, 3) * Math.PI * 2;
+  const ascendingNode =
+    CATEGORY_ASCENDING_NODES[categoryIndex(category)] +
+    (seeded(slug, 3) - 0.5) * (Math.PI / 5);
   const phase = seeded(slug, 4) * Math.PI * 2;
   const direction = seeded(slug, 5) > 0.5 ? 1 : -1;
   const speed = direction * (0.018 + seeded(slug, 6) * 0.032);

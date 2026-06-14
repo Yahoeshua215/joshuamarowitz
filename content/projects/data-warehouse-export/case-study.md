@@ -12,5 +12,4 @@ Designed the connector configuration and data-model UI behind Fivetran-powered w
 
 **Walkthroughs:**
 
-- [Databricks config form — first pass](https://share.zight.com/Z4uEjL7e)
 - [Message/user events concept](https://share.zight.com/Wnu50e7b)
