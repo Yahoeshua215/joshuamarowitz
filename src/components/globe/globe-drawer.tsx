@@ -80,7 +80,7 @@ export function GlobeDrawer({ projects }: { projects: Project[] }) {
         aria-expanded={open}
       >
         <ListTree className="h-3.5 w-3.5 shrink-0" />
-        <span className="orbit-header-btn-label">Projects</span>
+        <span className="orbit-header-btn-label">Project List</span>
         <kbd className="hidden sm:inline">⌘K</kbd>
       </OrbitHeaderButton>
 

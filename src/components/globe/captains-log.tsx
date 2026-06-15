@@ -183,19 +183,22 @@ export function CaptainsLog({ weeks }: { weeks: LogWeek[] }) {
         role="dialog"
         aria-modal="true"
         aria-label="Product Designer log"
-        className="hud-panel relative z-10 my-auto flex w-full max-w-[68rem] flex-col overflow-hidden rounded-2xl border text-white transition-transform duration-200 ease-out [transform:perspective(1600px)] will-change-transform sm:h-[min(82dvh,46rem)]"
-        style={{
-          borderColor: `${ACCENT}55`,
-          background:
-            "linear-gradient(155deg, rgba(255,255,255,0.06), rgba(255,255,255,0.012) 45%), linear-gradient(0deg, rgba(6,11,18,0.96), rgba(6,11,18,0.96))",
-          boxShadow: `0 0 60px ${ACCENT}1a, 0 30px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.1)`,
-        }}
+        className="cut-modal relative z-10 my-auto w-full max-w-[68rem] text-white transition-transform duration-200 ease-out [transform:perspective(1600px)] will-change-transform sm:h-[min(82dvh,46rem)]"
+        style={{ ["--cut-accent" as string]: ACCENT, ["--cut" as string]: "26px" }}
       >
+       <div
+          className="cut-modal-inner flex h-full flex-col"
+          style={{
+            background:
+              "linear-gradient(155deg, rgba(255,255,255,0.06), rgba(255,255,255,0.012) 45%), linear-gradient(0deg, rgba(6,11,18,0.96), rgba(6,11,18,0.96))",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.1)",
+          }}
+        >
         {/* Cursor-follow shine */}
         <div
           ref={glowRef}
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-20 rounded-2xl opacity-0 transition-opacity duration-500"
+          className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-500"
           style={{
             background: `radial-gradient(440px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.1), ${ACCENT}12 34%, transparent 60%)`,
             mixBlendMode: "screen",
@@ -399,6 +402,7 @@ export function CaptainsLog({ weeks }: { weeks: LogWeek[] }) {
               </p>
             )}
           </div>
+        </div>
         </div>
       </div>
     </div>

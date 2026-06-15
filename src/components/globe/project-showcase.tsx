@@ -1,6 +1,6 @@
 "use client";
 
-import { ExternalLink, Maximize2, Play, X } from "lucide-react";
+import { ExternalLink, Maximize2, Minimize2, Play, X } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -25,28 +25,6 @@ const linkLabels: Record<string, string> = {
 
 type PrimaryKind = "live" | "video" | "github" | "figma";
 
-
-function Corner({
-  pos,
-  color,
-}: {
-  pos: "tl" | "tr" | "bl" | "br";
-  color: string;
-}) {
-  const map = {
-    tl: "left-3 top-3 border-l border-t",
-    tr: "right-3 top-3 border-r border-t",
-    bl: "left-3 bottom-3 border-b border-l",
-    br: "right-3 bottom-3 border-b border-r",
-  } as const;
-  return (
-    <span
-      aria-hidden
-      className={`pointer-events-none absolute h-4 w-4 ${map[pos]}`}
-      style={{ borderColor: `${color}99` }}
-    />
-  );
-}
 
 function Section({
   label,
@@ -145,7 +123,9 @@ export function ProjectShowcase({
   const panelRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  // When the screenshot is clicked, the whole model grows wider and the
+  // screenshot is shown full-size in place (rather than a separate lightbox).
+  const [expanded, setExpanded] = useState(false);
 
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -156,13 +136,13 @@ export function ProjectShowcase({
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      // Esc closes the lightbox first (if open), otherwise the whole modal.
-      if (lightboxOpen) setLightboxOpen(false);
+      // Esc collapses the expanded view first (if open), otherwise the modal.
+      if (expanded) setExpanded(false);
       else onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, lightboxOpen]);
+  }, [onClose, expanded]);
 
   const handleMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     const el = panelRef.current;
@@ -208,7 +188,11 @@ export function ProjectShowcase({
         className="absolute inset-0 bg-black/65 backdrop-blur-sm"
       />
 
-      <div className="relative z-10 my-auto flex w-full max-w-[64rem] max-h-[calc(100dvh-6rem)] shrink-0 flex-col">
+      <div
+        className={`relative z-10 my-auto flex w-full max-h-[calc(100dvh-6rem)] shrink-0 flex-col transition-[max-width] duration-500 ease-out ${
+          expanded ? "max-w-[96rem]" : "max-w-[64rem]"
+        }`}
+      >
         <div className="mb-2 flex shrink-0 justify-end">
           <button
             type="button"
@@ -227,28 +211,27 @@ export function ProjectShowcase({
           role="dialog"
           aria-modal="true"
           aria-label={project.title}
-          className="hud-panel relative min-h-0 flex-1 overflow-y-auto rounded-2xl border text-white transition-transform duration-200 ease-out [transform:perspective(1600px)] will-change-transform"
-          style={{
-            borderColor: `${accent}55`,
-            background:
-              "linear-gradient(155deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015) 45%), linear-gradient(0deg, rgba(8,11,18,0.92), rgba(8,11,18,0.92))",
-            boxShadow: `0 0 60px ${accent}1a, 0 30px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.12)`,
-          }}
+          className="cut-modal relative min-h-0 flex-1 text-white transition-transform duration-200 ease-out [transform:perspective(1600px)] will-change-transform"
+          style={{ ["--cut-accent" as string]: accent, ["--cut" as string]: "26px" }}
         >
+         <div
+            className="cut-modal-inner h-full overflow-y-auto"
+            style={{
+              background:
+                "linear-gradient(155deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015) 45%), linear-gradient(0deg, rgba(8,11,18,0.94), rgba(8,11,18,0.94))",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)",
+            }}
+          >
           {/* Cursor-follow shine */}
           <div
             ref={glowRef}
             aria-hidden
-            className="pointer-events-none absolute inset-0 z-20 rounded-2xl opacity-0 transition-opacity duration-500"
+            className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-500"
             style={{
               background: `radial-gradient(440px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.1), ${accent}12 34%, transparent 60%)`,
               mixBlendMode: "screen",
             }}
           />
-          <Corner pos="tl" color={accent} />
-          <Corner pos="tr" color={accent} />
-          <Corner pos="bl" color={accent} />
-          <Corner pos="br" color={accent} />
 
           {/* Header */}
           <div className="relative border-b border-white/10 px-6 py-5 sm:px-8">
@@ -275,7 +258,9 @@ export function ProjectShowcase({
           {/* Body — preview left, context right */}
           <div
             className={`grid gap-6 px-6 py-6 sm:px-8 md:gap-8 ${
-              hasSideContext ? "md:grid-cols-[minmax(0,1fr)_300px]" : ""
+              hasSideContext && !expanded
+                ? "md:grid-cols-[minmax(0,1fr)_300px]"
+                : ""
             }`}
           >
             {/* Preview */}
@@ -295,7 +280,11 @@ export function ProjectShowcase({
                       <img
                         src={shot.src}
                         alt={shot.alt}
-                        className="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                        className={
+                          expanded
+                            ? "max-h-[78vh] w-full bg-black/40 object-contain transition-all duration-500"
+                            : "aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                        }
                       />
                     ) : (
                       <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-2 text-white/40">
@@ -326,14 +315,27 @@ export function ProjectShowcase({
                       <span className="h-2 w-2 rounded-full bg-white/15" />
                     </div>
 
-                    {/* Zoom affordance — only when there's a screenshot to enlarge */}
+                    {/* Expand/collapse affordance — only when there's a screenshot */}
                     {shot && (
                       <span
-                        className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-md border bg-black/50 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100"
+                        className={`pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-md border bg-black/50 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.15em] backdrop-blur-sm transition-opacity duration-200 ${
+                          expanded
+                            ? "opacity-100"
+                            : "opacity-0 group-hover:opacity-100"
+                        }`}
                         style={{ borderColor: `${accent}66`, color: accent }}
                       >
-                        <Maximize2 className="h-3 w-3" />
-                        Expand
+                        {expanded ? (
+                          <>
+                            <Minimize2 className="h-3 w-3" />
+                            Collapse
+                          </>
+                        ) : (
+                          <>
+                            <Maximize2 className="h-3 w-3" />
+                            Expand
+                          </>
+                        )}
                       </span>
                     )}
                   </>
@@ -343,15 +345,21 @@ export function ProjectShowcase({
                   "group relative block overflow-hidden rounded-xl border border-white/10 bg-black/40";
                 const previewStyle = { boxShadow: `inset 0 0 40px ${accent}10` };
 
-                // A real screenshot opens a lightbox; otherwise the placeholder
-                // links out to the primary destination (e.g. a video walkthrough).
+                // A real screenshot expands the whole model in place; otherwise
+                // the placeholder links out to the primary destination (e.g. a
+                // video walkthrough).
                 if (shot) {
                   return (
                     <button
                       type="button"
-                      onClick={() => setLightboxOpen(true)}
-                      aria-label="Enlarge screenshot"
-                      className={`${previewClass} w-full cursor-zoom-in text-left`}
+                      onClick={() => setExpanded((v) => !v)}
+                      aria-label={
+                        expanded ? "Collapse screenshot" : "Enlarge screenshot"
+                      }
+                      aria-expanded={expanded}
+                      className={`${previewClass} w-full text-left ${
+                        expanded ? "cursor-zoom-out" : "cursor-zoom-in"
+                      }`}
                       style={previewStyle}
                     >
                       {PreviewInner}
@@ -441,34 +449,9 @@ export function ProjectShowcase({
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
-
-      {/* Lightbox — click a screenshot to view it full size */}
-      {shot && lightboxOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${project.title} — enlarged screenshot`}
-          onClick={() => setLightboxOpen(false)}
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-10"
-        >
-          <button
-            type="button"
-            aria-label="Close"
-            onClick={() => setLightboxOpen(false)}
-            className="absolute right-4 top-4 rounded-md border border-white/15 bg-white/5 p-1.5 text-white/70 transition-colors hover:text-white"
-          >
-            <X className="h-5 w-5" />
-          </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={shot.src}
-            alt={shot.alt}
-            className="max-h-[92vh] max-w-[94vw] cursor-zoom-out rounded-lg border border-white/10 object-contain shadow-2xl"
-          />
-        </div>
-      )}
     </div>
   );
 

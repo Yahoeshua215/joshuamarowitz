@@ -15,8 +15,8 @@ export function GlobeLegend({
   onToggle: (category: Project["category"]) => void;
 }) {
   return (
-    <div className="absolute bottom-5 left-5 z-10 select-none font-mono text-[11px] uppercase tracking-[0.15em] text-white/70">
-      <div className="rounded-lg border border-white/10 bg-black/40 px-4 py-3 backdrop-blur-sm">
+    <div className="absolute bottom-4 left-4 z-10 max-w-[min(15rem,calc(100vw-2rem))] select-none font-mono text-[11px] uppercase tracking-[0.15em] text-white/70 sm:bottom-5 sm:left-5">
+      <div className="rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 backdrop-blur-sm sm:px-4 sm:py-3">
         <p className="mb-2 text-white/50">{count} satellites in orbit</p>
         <div className="space-y-1.5">
           {MISSION_CATEGORY_ORDER.map((category) => (
@@ -30,7 +30,7 @@ export function GlobeLegend({
           ))}
         </div>
         <p className="mt-2.5 text-[10px] normal-case tracking-normal text-white/40">
-          Click a row to filter · click a satellite for details
+          Select a row to filter · select a satellite for details
         </p>
       </div>
     </div>

@@ -24,6 +24,7 @@ function SceneReady({ onReady }: { onReady: () => void }) {
 }
 import { CameraRig } from "./camera-rig";
 import { CaptainsLog } from "./captains-log";
+import { DesignSystemHud } from "./design-system-hud";
 import { Earth } from "./earth";
 import { GlobeDrawer } from "./globe-drawer";
 import { GlobeLegend } from "./globe-legend";
@@ -194,6 +195,8 @@ export default function GlobeScene({
         active={active}
         onToggle={toggleCategory}
       />
+
+      <DesignSystemHud />
       <OrbitHeaderRail>
         <GlobeDrawer projects={visibleProjects} />
         <CaptainsLog weeks={logWeeks} />

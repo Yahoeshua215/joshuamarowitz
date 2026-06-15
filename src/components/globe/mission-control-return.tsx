@@ -48,10 +48,10 @@ export function MissionControlReturn({
           onReturn();
         }
       }}
-      className="group absolute left-5 top-[max(1.25rem,env(safe-area-inset-top))] z-[55] flex items-center gap-3"
+      className="group absolute left-5 top-[max(1.25rem,env(safe-area-inset-top))] z-[55] flex items-center gap-2.5 sm:gap-3"
     >
       <div
-        className="relative h-20 w-16 shrink-0 overflow-hidden rounded-lg border border-[#5ee0c8]/25 bg-gradient-to-b from-white/[0.04] to-black/40 transition-all duration-300 group-hover:border-[#5ee0c8]/70"
+        className="relative h-16 w-12 shrink-0 overflow-hidden rounded-lg border border-[#5ee0c8]/25 bg-gradient-to-b from-white/[0.04] to-black/40 transition-all duration-300 group-hover:border-[#5ee0c8]/70 sm:h-20 sm:w-16"
         style={{ boxShadow: "inset 0 0 20px rgba(94,224,200,0.1)" }}
       >
         {/* Canvas is decorative here; let clicks fall through to the link. */}
@@ -61,7 +61,9 @@ export function MissionControlReturn({
         <span className="pointer-events-none absolute left-1.5 top-1.5 h-3 w-3 rounded-full border border-[#5ee0c8]/40" />
       </div>
 
-      <div className="font-mono uppercase leading-tight">
+      {/* Label collapses on phones so the back tile and the top-right rail
+          never collide; the avatar itself stays as the tap target. */}
+      <div className="hidden font-mono uppercase leading-tight sm:block">
         <span className="flex items-center gap-1 text-[9px] tracking-[0.25em] text-white/45 transition-colors group-hover:text-[#5ee0c8]">
           <ArrowLeft className="h-3 w-3 transition-transform group-hover:-translate-x-0.5" />
           Return to

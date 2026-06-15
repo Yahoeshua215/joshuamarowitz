@@ -72,18 +72,23 @@ export function VideoModal({ src, alt, title, open, onClose }: VideoModalProps) 
           </button>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-border bg-black shadow-2xl">
-          <video
-            ref={videoRef}
-            src={src}
-            autoPlay
-            loop
-            muted
-            playsInline
-            controls
-            className="aspect-video max-h-[80vh] w-full object-contain"
-            aria-label={alt}
-          />
+        <div
+          className="cut-modal"
+          style={{ ["--cut-accent" as string]: "#5ee0c8", ["--cut" as string]: "18px" }}
+        >
+          <div className="cut-modal-inner bg-black">
+            <video
+              ref={videoRef}
+              src={src}
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              className="aspect-video max-h-[80vh] w-full object-contain"
+              aria-label={alt}
+            />
+          </div>
         </div>
       </div>
     </div>

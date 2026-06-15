@@ -366,31 +366,40 @@ export function LandingCanvas() {
         ref={panelRef}
         onPointerMove={handleMove}
         onPointerLeave={handleLeave}
-        className="hud-panel relative z-10 my-auto w-full max-w-[60rem] shrink-0 rounded-2xl border border-white/15 backdrop-blur-md transition-transform duration-200 ease-out [transform:perspective(1500px)] will-change-transform"
+        className="relative z-10 my-auto w-full max-w-[60rem] shrink-0 transition-transform duration-200 ease-out [transform:perspective(1500px)] will-change-transform"
+      >
+      {/* Chamfered accent frame — the same cut-corner treatment as the project
+          showcase + design-system modals: the outer paints the glowing accent
+          border, the inner holds the clipped glass fill. */}
+      <div
+        className="cut-modal"
+        style={{ ["--cut-accent" as string]: ACCENT, ["--cut" as string]: "26px" }}
+      >
+      <div
+        className="hud-panel cut-modal-inner backdrop-blur-md"
         style={{
+          // Near-opaque dark fill so the accent frame only reads as a thin
+          // border — a translucent fill would let the teal bleed across the
+          // whole panel.
           background:
-            "linear-gradient(155deg, rgba(255,255,255,0.09), rgba(255,255,255,0.015) 45%, rgba(94,224,200,0.045)), linear-gradient(0deg, rgba(10,14,22,0.32), rgba(10,14,22,0.32))",
-          boxShadow:
-            "0 0 70px rgba(94,224,200,0.1), 0 30px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.2)",
+            "linear-gradient(155deg, rgba(255,255,255,0.07), rgba(255,255,255,0.012) 45%, rgba(94,224,200,0.035)), linear-gradient(0deg, rgba(9,13,21,0.96), rgba(9,13,21,0.96))",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18)",
         }}
       >
         {/* Cursor-follow shine */}
         <div
           ref={glowRef}
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-20 rounded-2xl opacity-0 transition-opacity duration-500"
+          className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-500"
           style={{
             background:
               "radial-gradient(480px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.14), rgba(94,224,200,0.07) 32%, transparent 60%)",
             mixBlendMode: "screen",
           }}
         />
-        <Corner pos="tl" />
+        {/* Brackets flank the two sharp corners; the chamfer dresses the other two. */}
         <Corner pos="tr" />
         <Corner pos="bl" />
-        <Corner pos="br" />
-        <SideRail side="left" />
-        <SideRail side="right" />
 
         {/* Header */}
         <div className="relative border-b border-white/10 px-6 py-4 sm:px-8">
@@ -629,6 +638,12 @@ export function LandingCanvas() {
             <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
+      </div>
+      </div>
+
+      {/* Side rails live outside the clip so they can reach past the panel edges. */}
+      <SideRail side="left" />
+      <SideRail side="right" />
       </div>
       </div>
       {/* End mission-control panel. */}

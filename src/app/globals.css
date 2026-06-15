@@ -213,45 +213,6 @@ details[open] .chevron {
     #04070c;
 }
 
-/* Chamfered, glowing panel — wrapper renders the glowing border, the
-   inner element renders the dark fill. drop-shadow follows the clip. */
-.scifi-panel {
-  position: relative;
-  clip-path: polygon(
-    16px 0,
-    100% 0,
-    100% calc(100% - 16px),
-    calc(100% - 16px) 100%,
-    0 100%,
-    0 16px
-  );
-  background: linear-gradient(
-    155deg,
-    rgba(94, 224, 200, 0.6),
-    rgba(94, 224, 200, 0.12) 55%,
-    rgba(94, 224, 200, 0.35)
-  );
-  padding: 1.5px;
-  filter: drop-shadow(0 0 7px rgba(94, 224, 200, 0.3));
-}
-
-.scifi-panel-inner {
-  height: 100%;
-  clip-path: polygon(
-    15px 0,
-    100% 0,
-    100% calc(100% - 15px),
-    calc(100% - 15px) 100%,
-    0 100%,
-    0 15px
-  );
-  background: linear-gradient(
-    160deg,
-    rgba(10, 22, 30, 0.94),
-    rgba(6, 12, 18, 0.96)
-  );
-}
-
 /* Selectable "loadout" list item — chamfered left edge */
 .scifi-item {
   position: relative;
@@ -287,21 +248,6 @@ details[open] .chevron {
   box-shadow:
     inset 3px 0 0 var(--scifi-accent, #5ee0c8),
     0 0 14px rgba(94, 224, 200, 0.25);
-}
-
-/* Stat / proficiency bar */
-.scifi-bar {
-  height: 7px;
-  background: rgba(255, 255, 255, 0.07);
-  clip-path: polygon(3px 0, 100% 0, calc(100% - 3px) 100%, 0 100%);
-  overflow: hidden;
-}
-
-.scifi-bar > span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(94, 224, 200, 0.5), #5ee0c8);
-  box-shadow: 0 0 8px rgba(94, 224, 200, 0.6);
 }
 
 /* Edge tick marks */
@@ -352,6 +298,54 @@ details[open] .chevron {
   border-color: rgba(94, 224, 200, 0.6);
   box-shadow: 0 0 16px rgba(94, 224, 200, 0.22);
   transform: translateY(-2px);
+}
+
+/* ============================================================
+   Cut-corner modal frame — the chamfered "loadout" panel language
+   generalized for dialogs. The wrapper paints the
+   glowing accent border; the inner paints the dark fill and clips content
+   to the chamfer. Drive the accent per-modal with --cut-accent and the
+   corner size with --cut.
+   ============================================================ */
+.cut-modal {
+  --cut: 24px;
+  --cut-accent: #5ee0c8;
+  position: relative;
+  clip-path: polygon(
+    var(--cut) 0,
+    100% 0,
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    0 100%,
+    0 var(--cut)
+  );
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--cut-accent) 60%, transparent),
+    color-mix(in srgb, var(--cut-accent) 12%, transparent) 55%,
+    color-mix(in srgb, var(--cut-accent) 34%, transparent)
+  );
+  padding: 1.5px;
+  filter: drop-shadow(0 0 11px color-mix(in srgb, var(--cut-accent) 26%, transparent))
+    drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55));
+}
+
+.cut-modal-inner {
+  position: relative;
+  height: 100%;
+  clip-path: polygon(
+    calc(var(--cut) - 1px) 0,
+    100% 0,
+    100% calc(100% - var(--cut) + 1px),
+    calc(100% - var(--cut) + 1px) 100%,
+    0 100%,
+    0 calc(var(--cut) - 1px)
+  );
+  background: linear-gradient(
+    160deg,
+    rgba(10, 16, 24, 0.95),
+    rgba(6, 10, 16, 0.97)
+  );
 }
 
 /* ============================================================
@@ -1058,10 +1052,38 @@ details[open] .chevron {
   color: rgba(255, 255, 255, 0.38);
 }
 
+/* On phones the four corner HUDs would crowd each other, so collapse the
+   button rail to icon-only squares — the leading icon carries the meaning and
+   each control keeps its aria-label for screen readers. */
+@media (max-width: 640px) {
+  .orbit-header-rail {
+    gap: 0.2rem;
+  }
+
+  .orbit-header-btn {
+    gap: 0;
+    height: 2.25rem;
+    width: 2.25rem;
+    padding: 0;
+  }
+
+  .orbit-header-btn-label {
+    /* Visually hidden but kept in the DOM for assistive tech. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
 @media (max-width: 420px) {
   .orbit-header-btn {
     font-size: 9px;
     letter-spacing: 0.1em;
-    padding-inline: 0.4rem;
   }
 }
