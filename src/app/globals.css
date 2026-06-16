@@ -132,6 +132,20 @@ details[open] .chevron {
   animation: credits-scroll 22s linear infinite;
 }
 
+/* Each skill bolds/brightens/grows as it passes the list's vertical center.
+   --focus (0→1) is set per-frame from JS; everything here interpolates off it,
+   so the centered word eases into a bold state and back out. */
+.credit-item {
+  --focus: 0;
+  color: rgba(255, 255, 255, calc(0.42 + 0.53 * var(--focus)));
+  /* Faux-bold via text-stroke only — no scaling, so size stays constant. */
+  -webkit-text-stroke: calc(var(--focus) * 0.6px) currentColor;
+  text-stroke: calc(var(--focus) * 0.6px) currentColor;
+  paint-order: stroke fill;
+  text-shadow: 0 0 calc(var(--focus) * 8px)
+    rgba(255, 255, 255, calc(var(--focus) * 0.22));
+}
+
 .credits-mask {
   -webkit-mask-image: linear-gradient(
     to bottom,
@@ -565,54 +579,83 @@ details[open] .chevron {
   animation: scifi-reticle-spin 14s linear infinite;
 }
 
-/* Mini orbit marker on the mission segments — a satellite circling an orb,
-   a small preview of the orbit screen. */
-@keyframes mission-orb-spin {
+/* Selected mission tab: a hairline, faint-colored rectangle outline with a
+   brighter tracer that streaks around the border (like the side-rail scan). */
+@property --streak-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes tab-streak-spin {
   to {
-    transform: rotate(360deg);
+    --streak-angle: 360deg;
   }
 }
 
-.mission-orb-spin {
-  animation: mission-orb-spin 7s linear infinite;
+.tab-streak {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  padding: 1px; /* hairline border thickness */
+  background: conic-gradient(
+    from var(--streak-angle),
+    color-mix(in srgb, var(--c) 16%, transparent) 0%,
+    color-mix(in srgb, var(--c) 16%, transparent) 86%,
+    var(--c) 94%,
+    color-mix(in srgb, var(--c) 16%, transparent) 100%
+  );
+  /* Show only the 1px border ring (exclude the padding box). */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: tab-streak-spin 3.5s linear infinite;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mission-orb-spin {
+  .tab-streak {
     animation: none;
   }
 }
 
-/* Mission panel flip — selecting the other segment spins the whole card 180°
-   on its Y axis, revealing the other mission on the back face. The two faces
-   are grid-stacked so the card sizes to the taller one. */
-.mission-flip {
-  perspective: 1600px;
+/* Selected mission tab: a hairline bottom stroke (the rectangle's bottom edge)
+   with a tracer that pings left↔right along it. */
+.tab-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--c) 16%, transparent);
 }
 
-.mission-flip-inner {
-  display: grid;
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+.tab-underline::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--c), transparent);
+  animation: tab-underline-ping 2.2s ease-in-out infinite alternate;
 }
 
-.mission-flip-inner.is-flipped {
-  transform: rotateY(180deg);
-}
-
-.mission-flip-face {
-  grid-area: 1 / 1;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.mission-flip-back {
-  transform: rotateY(180deg);
+@keyframes tab-underline-ping {
+  to {
+    transform: translateX(150%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mission-flip-inner {
-    transition: none;
+  .tab-underline::after {
+    animation: none;
   }
 }
 

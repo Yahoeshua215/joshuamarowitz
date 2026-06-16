@@ -15,7 +15,7 @@ export const MISSIONS: MissionCategory[] = [
   {
     key: "onesignal",
     label: "OneSignal Projects",
-    blurb: "AI · Prototyping · Releases",
+    blurb: "AI · Prototyping · Shipping",
     description:
       "Production design and AI prototypes I've shipped at OneSignal, spanning push, journeys, dashboards, and the systems behind them.",
   },
