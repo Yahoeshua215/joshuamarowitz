@@ -641,22 +641,9 @@ details[open] .chevron {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: 0; /* highlight held static toward the left of the stroke */
   width: 40%;
   background: linear-gradient(90deg, transparent, var(--c), transparent);
-  animation: tab-underline-ping 2.2s ease-in-out infinite alternate;
-}
-
-@keyframes tab-underline-ping {
-  to {
-    transform: translateX(150%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tab-underline::after {
-    animation: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
