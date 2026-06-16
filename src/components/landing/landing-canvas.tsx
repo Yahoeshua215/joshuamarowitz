@@ -484,42 +484,35 @@ export function LandingCanvas() {
 
         {/* Body */}
         <div className="p-6 sm:p-8">
-          {/* Top row: avatar · missions/toolkit · skills. The center track is
-              kept wide enough that the segmented-control labels never wrap; the
-              avatar is pushed left and skills right to give it breathing room. */}
-          {/* Symmetric flanks (avatar | mission | profile) keep the mission
-              card dead-center in the modal; the avatar frame stays capped and
-              centered within its track. */}
-          <div className="grid justify-center gap-5 md:grid-cols-[minmax(260px,320px)_minmax(390px,430px)_minmax(260px,320px)] md:items-stretch md:gap-8">
-          {/* Center: mission panel, then the two animated tickers (toolkit +
-              skills) side by side below it. */}
-          <div className="order-2 flex flex-col gap-5 md:order-2 md:gap-8">
-            <div>
-              <Label>Select a mission</Label>
-              <MissionSwitch
-                value={selectedMission}
-                onChange={setSelectedMission}
-                onLaunch={handleLaunch}
-              />
-            </div>
-            {/* Toolkit + skills: one labeled panel (label above the card, like
-                the other sections), split by a vertical divider. Never flips —
-                only the mission card does. */}
-            <div className="flex min-h-0 flex-1 flex-col">
-              <Label>Toolkit and Skills</Label>
-              <div className="grid min-h-0 flex-1 grid-cols-[0.9fr_1.1fr] gap-3 rounded-2xl border border-white/[0.06] bg-white/[0.015] p-3">
-                <div className="flex items-center justify-center text-center">
-                  <SkillScramble />
-                </div>
-                <div className="border-l border-white/[0.08] pl-3">
-                  <SkillsCredits />
-                </div>
+          {/* Layout via .landing-grid — mobile: mission, then avatar +
+              toolkit/skills on one row, then profile; desktop: avatar |
+              (mission over toolkit/skills) | profile. */}
+          <div className="landing-grid">
+          {/* Mission */}
+          <div className="flex flex-col [grid-area:mission]">
+            <Label>Select a mission</Label>
+            <MissionSwitch
+              value={selectedMission}
+              onChange={setSelectedMission}
+              onLaunch={handleLaunch}
+            />
+          </div>
+
+          {/* Toolkit + skills: one labeled panel split by a vertical divider. */}
+          <div className="flex min-h-0 flex-col [grid-area:tools]">
+            <Label>Toolkit and Skills</Label>
+            <div className="grid min-h-0 flex-1 grid-cols-[0.9fr_1.1fr] gap-3 rounded-2xl border border-white/[0.06] bg-white/[0.015] p-3">
+              <div className="flex items-center justify-center text-center">
+                <SkillScramble />
+              </div>
+              <div className="border-l border-white/[0.08] pl-3">
+                <SkillsCredits />
               </div>
             </div>
           </div>
 
-          {/* Left: avatar hologram */}
-          <div className="order-1 flex flex-col md:order-1">
+          {/* Avatar hologram */}
+          <div className="flex flex-col [grid-area:avatar]">
             <Label>Avatar</Label>
             <div
               onPointerDown={(e) => e.stopPropagation()}
@@ -654,8 +647,8 @@ export function LandingCanvas() {
             </div>
           </div>
 
-          {/* Right: profile copy, carded to balance the avatar card opposite. */}
-          <div className="order-3 flex flex-col md:order-3">
+          {/* Profile copy, carded to balance the avatar opposite. */}
+          <div className="flex flex-col [grid-area:profile]">
             <Label>Profile</Label>
             <div className="flex-1 rounded-2xl border border-white/[0.06] bg-white/[0.015] p-3">
               <div className="space-y-3 text-[12.5px] leading-7 text-white/70">

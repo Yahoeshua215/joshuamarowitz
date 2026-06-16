@@ -169,6 +169,39 @@ details[open] .chevron {
   }
 }
 
+/* Landing body layout.
+   Mobile: mission (full width), then avatar + toolkit/skills side by side,
+   then profile (full width).
+   Desktop: avatar | (mission stacked over toolkit/skills) | profile, with the
+   avatar and profile spanning both center rows. */
+.landing-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "mission mission"
+    "avatar tools"
+    "profile profile";
+}
+
+@media (min-width: 768px) {
+  .landing-grid {
+    gap: 2rem;
+    align-items: stretch;
+    justify-content: center;
+    grid-template-columns:
+      minmax(260px, 320px)
+      minmax(390px, 430px)
+      minmax(260px, 320px);
+    /* Mission row hugs its content; the tools row absorbs the rest so the
+       toolkit/skills card fills down to match the avatar/profile cards. */
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "avatar mission profile"
+      "avatar tools profile";
+  }
+}
+
 /* Futuristic HUD panel for the globe project modal */
 .hud-panel {
   position: relative;
@@ -641,9 +674,30 @@ details[open] .chevron {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0; /* highlight held static toward the left of the stroke */
+  left: 0; /* resting position: held toward the left of the stroke */
   width: 40%;
   background: linear-gradient(90deg, transparent, var(--c), transparent);
+  /* On activation (the underline mounts when a tab is selected) the tracer
+     sweeps left → right → left once, then settles back at the left. */
+  animation: tab-underline-sweep 1s ease-in-out;
+}
+
+@keyframes tab-underline-sweep {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(150%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-underline::after {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

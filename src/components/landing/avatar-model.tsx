@@ -19,11 +19,6 @@ export const MODEL_ONESIGNAL_URL = "/me/onesignal-ai.glb";
 // How long the turntable stays paused after the user lets go of a drag.
 const RESUME_DELAY_MS = 1500;
 
-// A toggle spin turns this many whole revolutions and lands back at the angle
-// it started from.
-const SPIN_TURNS = 2;
-const SPIN_DURATION = 0.7; // seconds
-
 // Loads a rigged GLB avatar, plays its baked animation, normalizes scale by
 // height so it fills the framed viewport regardless of pose, and slowly turns
 // it like a hologram on a turntable.
@@ -38,10 +33,9 @@ export function AvatarModel({
   const spinRef = useRef<THREE.Group>(null);
   const draggingRef = useRef(false);
   const lastInteractRef = useRef(0);
-  // Tweened spin: on toggle the avatar turns whole revolutions and lands back
-  // at the angle it was at before the spin started.
-  const spinFromRef = useRef(0);
-  const spinTRef = useRef(1); // tween progress; 1 = settled (not spinning)
+  // Spin burst (rad/s) that decays smoothly into the idle turntable speed, so a
+  // toggle never comes to a hard stop.
+  const boostRef = useRef(0);
   const firstSpinRef = useRef(true);
   const gl = useThree((state) => state.gl);
   const { scene, animations } = useGLTF(url);
@@ -127,32 +121,28 @@ export function AvatarModel({
     };
   }, [gl]);
 
-  // A changing spinToken starts a spin that turns whole revolutions and lands
-  // back at the angle it started from (skip the initial mount).
+  // A changing spinToken kicks off a spin burst (skip the initial mount).
   useEffect(() => {
     if (firstSpinRef.current) {
       firstSpinRef.current = false;
       return;
     }
-    if (spinRef.current) spinFromRef.current = spinRef.current.rotation.y;
-    spinTRef.current = 0;
+    boostRef.current = 55; // rad/s — ~2 turns, decaying into the idle speed
   }, [spinToken]);
 
   useFrame((_, delta) => {
     const g = spinRef.current;
     if (!g) return;
-    // Spinning: ease through whole turns, landing exactly back at the start
-    // angle (start + N·360°), so the orientation is unchanged afterwards.
-    if (spinTRef.current < 1) {
-      spinTRef.current = Math.min(1, spinTRef.current + delta / SPIN_DURATION);
-      const eased = 1 - Math.pow(1 - spinTRef.current, 3); // ease-out cubic
-      g.rotation.y = spinFromRef.current + eased * SPIN_TURNS * Math.PI * 2;
-      return;
-    }
     const idle =
       !draggingRef.current &&
       performance.now() - lastInteractRef.current > RESUME_DELAY_MS;
     if (idle) g.rotation.y += delta * 0.35;
+    // Burst decays exponentially into the idle turntable speed — no hard stop,
+    // so the spin flows seamlessly and ends roughly where it began (~2 turns).
+    if (boostRef.current > 0.01) {
+      g.rotation.y += delta * boostRef.current;
+      boostRef.current *= Math.exp(-delta * 4.5);
+    }
   });
 
   return (
