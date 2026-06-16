@@ -14,8 +14,8 @@
   "links": {},
   "images": [
     {
-      "src": "/placeholder.svg",
-      "alt": "Role-Based Access Control preview"
+      "src": "/projects/rbac/screenshot.png",
+      "alt": "Role-Based Access Control screenshot"
     }
   ],
   "featured": false,

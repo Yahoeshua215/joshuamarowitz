@@ -84,7 +84,6 @@ export const CREDITS_SKILLS: string[] = [
   "3D / WebGL",
   "Frontend Engineering",
   "AI Agents",
-  "Prompt Engineering",
   "Rapid Iteration",
   "Design Engineering",
 ];

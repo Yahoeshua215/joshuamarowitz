@@ -2,6 +2,7 @@
 
 import { ArrowRight, Linkedin } from "lucide-react";
 import dynamic from "next/dynamic";
+import NextImage from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -419,16 +420,26 @@ export function LandingCanvas() {
             >
               {ROLE}
             </p>
-            <p className="mt-1 text-xs lowercase tracking-wide text-white/50">
-              base of operations ·{" "}
+            <p className="mt-1 flex items-center justify-center gap-1.5 text-xs lowercase tracking-wide text-white/50">
+              base of operations ·
               <a
                 href="https://onesignal.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="OneSignal"
+                title="OneSignal"
                 onPointerDown={(e) => e.stopPropagation()}
-                className="font-medium text-[#f25f4c] underline decoration-[#f25f4c]/30 underline-offset-2 transition-colors hover:decoration-[#f25f4c]"
+                className="inline-flex items-center opacity-90 transition-opacity hover:opacity-100"
               >
-                onesignal.com
+                {/* Tiny inline wordmark sized to the surrounding font height. */}
+                <NextImage
+                  src="/onesignal-logo-white.png"
+                  alt="OneSignal"
+                  width={916}
+                  height={203}
+                  className="h-[20px] w-auto"
+                  priority
+                />
               </a>
             </p>
           </div>
@@ -455,11 +466,11 @@ export function LandingCanvas() {
 
         {/* Body */}
         <div className="px-6 py-5 sm:px-8">
-          {/* Top row: missions/toolkit · avatar · skills — symmetric flanks,
-              equal-width side tracks with the avatar centered. */}
-          <div className="grid justify-center gap-5 md:grid-cols-[minmax(0,260px)_minmax(210px,240px)_minmax(0,260px)] md:items-stretch md:gap-7">
-          {/* Left: missions + toolkit */}
-          <div className="order-2 flex flex-col gap-5 md:order-1">
+          {/* Top row: avatar · missions/toolkit · skills — the mission cards sit
+              in the center, the avatar on the left flank, scrolling skills right. */}
+          <div className="grid justify-center gap-5 md:grid-cols-[minmax(210px,240px)_minmax(0,260px)_minmax(0,260px)] md:items-stretch md:gap-7">
+          {/* Center: missions + toolkit */}
+          <div className="order-2 flex flex-col gap-5 md:order-2">
             <div>
               <Label>Select a mission</Label>
               <MissionSelect onLaunch={handleLaunch} onHover={setHoverMission} />
@@ -470,8 +481,8 @@ export function LandingCanvas() {
             </div>
           </div>
 
-          {/* Center: avatar hologram */}
-          <div className="order-1 flex flex-col md:order-2">
+          {/* Left: avatar hologram */}
+          <div className="order-1 flex flex-col md:order-1">
             <Label>
               <span className="block text-center">Avatar</span>
             </Label>
@@ -610,7 +621,7 @@ export function LandingCanvas() {
           </div>
 
           {/* Right: skills */}
-          <div className="order-3">
+          <div className="order-3 md:order-3">
             <SkillsCredits />
           </div>
           </div>

@@ -51,7 +51,12 @@ export function getOrbitParams(
     (seeded(slug, 3) - 0.5) * (Math.PI / 5);
   const phase = seeded(slug, 4) * Math.PI * 2;
   const direction = seeded(slug, 5) > 0.5 ? 1 : -1;
-  const speed = direction * (0.018 + seeded(slug, 6) * 0.032);
+  // Angular speed (rad per time-unit). Kept brisk enough that every orb visibly
+  // travels its ring within a few seconds — at the previous ~0.018–0.05 the
+  // slowest took ~6 minutes for a full orbit and read as frozen, especially
+  // while crossing in front of the Earth (where most motion is along the line
+  // of sight). Range here is ~0.04–0.09 → roughly a 70–160s orbit.
+  const speed = direction * (0.04 + seeded(slug, 6) * 0.05);
   return { radius, inclination, ascendingNode, phase, speed };
 }
 

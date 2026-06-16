@@ -130,16 +130,21 @@ function SatelliteDot({
     () => categoryColor(project.category),
     [project.category]
   );
-  // Hysteresis ref + scratch vectors for the in-front-of-globe test. It runs in
-  // the frame loop and feeds the WebGL emphasis directly — never React state —
-  // so dots brighten as they pass in front of the globe with zero re-render.
+  // Hysteresis ref + scratch vectors for the in-front-of-globe test. The ref
+  // feeds the WebGL emphasis every frame (zero re-render); the mirrored state
+  // drives the DOM label, which only flips when a dot crosses the globe's
+  // silhouette — an occasional toggle, not per-frame churn.
   const inFrontRef = useRef(false);
+  const [inFront, setInFront] = useState(false);
   const viewDir = useRef(new THREE.Vector3());
   const perp = useRef(new THREE.Vector3());
 
-  // Labels render via drei <Html> (a DOM overlay re-synced every frame), so only
-  // one ever mounts — on hover/select, never passively — which keeps it smooth.
-  const showLabel = isHovered || isSelected;
+  // Labels render via drei <Html> (a DOM overlay re-synced every frame). They
+  // appear on hover/select and also while a dot drifts in front of the globe,
+  // so the orbs name themselves as they sweep across the Earth's face.
+  const showLabel = isHovered || isSelected || inFront;
+  // Full emphasis is reserved for hover/select; an in-front pass gets the
+  // softer "passing" treatment (dimmer label, gentler glow).
   const highlighted = isHovered || isSelected;
 
   useFrame((state) => {
@@ -147,9 +152,10 @@ function SatelliteDot({
       orbitPosition(params, timeRef.current, groupRef.current.position);
     }
 
-    // Brighten dots passing in front of the globe. Computed here and applied
-    // straight to the halo/core below — no setState, so no re-render churn.
-    let inFront = false;
+    // Detect dots passing in front of the globe. The result brightens the
+    // halo/core below (applied straight to WebGL) and, on a transition, flips
+    // the React state that reveals the label.
+    let nextInFront = false;
     if (groupRef.current && !isSelected && !globeStore.getSnapshot().paused) {
       const satPos = groupRef.current.position;
       const camDist = state.camera.position.length();
@@ -167,23 +173,26 @@ function SatelliteDot({
       const overlaps = inFrontRef.current
         ? perpDist < EARTH_RADIUS * 1.15
         : perpDist < EARTH_RADIUS * 0.95;
-      inFront = nearSide && overlaps;
+      nextInFront = nearSide && overlaps;
     }
-    inFrontRef.current = inFront;
+    if (nextInFront !== inFrontRef.current) {
+      inFrontRef.current = nextInFront;
+      setInFront(nextInFront);
+    }
 
     if (haloRef.current) {
-      const target = highlighted ? 0.17 : inFront ? 0.11 : 0.085;
+      const target = highlighted ? 0.2 : nextInFront ? 0.135 : 0.105;
       const next = THREE.MathUtils.lerp(haloRef.current.scale.x, target, 0.18);
       haloRef.current.scale.setScalar(next);
       const mat = haloRef.current.material as THREE.SpriteMaterial;
       mat.opacity = THREE.MathUtils.lerp(
         mat.opacity,
-        highlighted ? 1 : inFront ? 0.85 : 0.7,
+        highlighted ? 1 : nextInFront ? 0.85 : 0.7,
         0.18
       );
     }
     if (coreRef.current) {
-      const target = highlighted ? 0.022 : inFront ? 0.018 : 0.015;
+      const target = highlighted ? 0.026 : nextInFront ? 0.022 : 0.019;
       const next = THREE.MathUtils.lerp(coreRef.current.scale.x, target, 0.2);
       coreRef.current.scale.setScalar(next);
     }
@@ -192,13 +201,13 @@ function SatelliteDot({
   return (
     <group ref={groupRef}>
       {/* Crisp core (unit sphere scaled in useFrame so hover can pulse it) */}
-      <mesh ref={coreRef} scale={0.015}>
+      <mesh ref={coreRef} scale={0.019}>
         <sphereGeometry args={[1, 16, 16]} />
         <meshBasicMaterial color={color} toneMapped={false} />
       </mesh>
 
       {/* Soft glow halo */}
-      <sprite ref={haloRef} scale={0.085}>
+      <sprite ref={haloRef} scale={0.105}>
         <spriteMaterial
           map={glow}
           color={color}
@@ -251,7 +260,7 @@ export function SatelliteField({
   const gl = useThree((s) => s.gl);
   const size = useThree((s) => s.size);
 
-  const { selectedSlug } = useGlobeStore();
+  const selectedSlug = useGlobeStore((s) => s.selectedSlug);
   // Hover lives in local state, not the global store — routing it through the
   // store re-renders the whole scene (globe + camera rig) on every cursor move,
   // which makes hovering feel laggy/sticky. Local state keeps it snappy.

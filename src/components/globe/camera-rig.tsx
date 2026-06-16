@@ -6,7 +6,7 @@ import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { Project } from "@/lib/store/types";
 import { getOrbitParams, orbitPosition } from "./orbits";
-import { useGlobeStore } from "./use-globe-store";
+import { globeStore, useGlobeStore } from "./use-globe-store";
 
 const DEFAULT_CAM = new THREE.Vector3(0, 1.1, 8);
 const DEFAULT_TARGET = new THREE.Vector3(0, 0, 0);
@@ -25,7 +25,7 @@ type CameraRigProps = {
  */
 export function CameraRig({ controlsRef, timeRef, projects }: CameraRigProps) {
   const { camera } = useThree();
-  const { selectedSlug } = useGlobeStore();
+  const selectedSlug = useGlobeStore((s) => s.selectedSlug);
 
   const categoryBySlug = useRef(
     new Map(projects.map((project) => [project.slug, project.category]))
@@ -58,6 +58,12 @@ export function CameraRig({ controlsRef, timeRef, projects }: CameraRigProps) {
 
   useFrame(() => {
     const controls = controlsRef.current;
+
+    // Drive auto-rotate off the store imperatively so toggling `paused` on click
+    // never re-renders React. drei's OrbitControls only calls update() (which is
+    // what applies autoRotate) while idle/enabled, which is exactly when we want
+    // the globe spinning; during a select/return ease this rig owns the camera.
+    if (controls) controls.autoRotate = !globeStore.getSnapshot().paused;
 
     // Idle: no satellite focused. Guarantee the user can always orbit/zoom.
     // This is the recovery path — even if a transition glitched, sitting idle

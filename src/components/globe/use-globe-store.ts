@@ -69,10 +69,20 @@ export const globeStore = {
   },
 };
 
-export function useGlobeStore(): GlobeState {
+/**
+ * Subscribe to the globe store. Pass a selector to subscribe to a single slice
+ * — the component then only re-renders when *that* slice changes, not on every
+ * state change. This matters on click: `select()` flips three fields at once,
+ * and without a selector every consumer (including the whole-scene GlobeScene)
+ * re-renders on the click frame, which stutters. Selectors must return a
+ * primitive or stable reference so useSyncExternalStore's Object.is check works.
+ */
+export function useGlobeStore<T = GlobeState>(
+  selector: (state: GlobeState) => T = (s) => s as unknown as T
+): T {
   return useSyncExternalStore(
     globeStore.subscribe,
-    globeStore.getSnapshot,
-    globeStore.getSnapshot
+    () => selector(state),
+    () => selector(state)
   );
 }

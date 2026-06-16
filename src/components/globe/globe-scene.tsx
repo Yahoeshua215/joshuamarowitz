@@ -33,6 +33,7 @@ import { OrbitHeaderRail } from "./orbit-header-rail";
 import { ProjectShowcase } from "./project-showcase";
 import { SatelliteField } from "./satellite-field";
 import { Satellites } from "./satellites";
+import { MilkyWay, Sun } from "./space-backdrop";
 import { globeStore, useGlobeStore } from "./use-globe-store";
 
 const ALL_CATEGORIES = MISSION_CATEGORY_ORDER;
@@ -54,7 +55,11 @@ export default function GlobeScene({
   const router = useRouter();
   const controlsRef = useRef<OrbitControlsImpl | null>(null);
   const timeRef = useRef(0);
-  const { modalSlug, paused } = useGlobeStore();
+  // Subscribe only to modalSlug — `paused` is driven imperatively onto
+  // OrbitControls in CameraRig, so a click (which flips paused) no longer
+  // re-renders this whole-scene component. modalSlug only changes ~1.5s after
+  // the click (or on close), keeping the click frame free of a tree reconcile.
+  const modalSlug = useGlobeStore((s) => s.modalSlug);
   const { resolvedTheme } = useTheme();
 
   // Dark curtain stays up until the globe is painted, then lifts.
@@ -156,6 +161,10 @@ export default function GlobeScene({
           intensity={night ? 2.2 : 2.6}
           color="#fff6e8"
         />
+        {/* Deep-space backdrop: the galactic band, and the sun parked along the
+            key-light direction so it reads as the source of the terminator. */}
+        <MilkyWay />
+        <Sun night={night} />
         <Suspense fallback={null}>
           <Earth night={night} />
           <SceneReady onReady={() => setReady(true)} />
@@ -181,7 +190,6 @@ export default function GlobeScene({
           dampingFactor={0.08}
           minDistance={2.2}
           maxDistance={14}
-          autoRotate={!paused}
           autoRotateSpeed={0.35}
         />
         <CameraRig controlsRef={controlsRef} timeRef={timeRef} projects={projects} />

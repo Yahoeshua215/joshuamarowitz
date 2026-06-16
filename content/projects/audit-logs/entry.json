@@ -15,7 +15,12 @@
   "links": {
     "video": "https://share.zight.com/d5u5XoGE"
   },
-  "images": [],
+  "images": [
+    {
+      "src": "/projects/audit-logs/screenshot.png",
+      "alt": "Audit Logs screenshot"
+    }
+  ],
   "featured": false,
   "order": 0
 }
