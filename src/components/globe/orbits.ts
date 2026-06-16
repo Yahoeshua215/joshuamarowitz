@@ -97,17 +97,20 @@ export function orbitPosition(
   return target;
 }
 
-// Section colors, kept in sync with the mission-card numbers on the landing
-// screen: Releases = red, OneSignal AI = yellow, Personal = blue.
+// Section colors, kept in sync with the landing mission segments:
+// OneSignal = red (brand), Josh / Personal = blue.
 export function categoryColor(category: Project["category"]): string {
   switch (category) {
-    case "onesignal-work":
-      return "#f25f4c"; // red
     case "onesignal":
-      return "#f5c542"; // yellow
+      return "#f25f4c"; // red
     case "personal":
       return "#4f9dff"; // blue
     default:
       return "#4f9dff";
   }
 }
+
+// Accent for the cross-cutting "AI" tag (the former OneSignal AI projects),
+// used by the orbit legend's AI sub-filter and AI dot markers.
+export const AI_TAG = "AI";
+export const AI_COLOR = "#f5c542"; // yellow

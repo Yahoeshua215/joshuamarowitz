@@ -7,11 +7,8 @@ export function SkillsCredits() {
   const loop = [...CREDITS_SKILLS, ...CREDITS_SKILLS];
 
   return (
-    <div className="relative h-full min-h-[300px] font-mono">
-      <p className="text-[10px] uppercase tracking-[0.3em] text-[#5ee0c8]/60">
-        Skills
-      </p>
-      <div className="credits-mask absolute inset-x-0 bottom-0 top-7 overflow-hidden">
+    <div className="relative h-full min-h-[140px] font-mono">
+      <div className="credits-mask absolute inset-0 overflow-hidden">
         <ul className="credits-track space-y-2.5">
           {loop.map((skill, i) => (
             <li

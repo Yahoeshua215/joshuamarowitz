@@ -14,7 +14,7 @@ import remarkGfm from "remark-gfm";
 import { Project } from "@/lib/store/types";
 import { categoryLabel, formatDateRange } from "@/lib/utils";
 import { StatusBadge } from "../status-badge";
-import { categoryColor } from "./orbits";
+import { AI_COLOR, AI_TAG, categoryColor } from "./orbits";
 
 const linkLabels: Record<string, string> = {
   live: "Live site",
@@ -438,14 +438,33 @@ export function ProjectShowcase({
                 Stack
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-white/65"
-                  >
-                    {tag}
-                  </span>
-                ))}
+                {project.tags.map((tag) => {
+                  // The "AI" tag gets a distinct accent chip so AI work reads
+                  // at a glance among the neutral stack chips.
+                  const isAi = tag === AI_TAG;
+                  return (
+                    <span
+                      key={tag}
+                      className="rounded-md border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.1em]"
+                      style={
+                        isAi
+                          ? {
+                              color: AI_COLOR,
+                              borderColor: `${AI_COLOR}66`,
+                              background: `${AI_COLOR}1f`,
+                              boxShadow: `0 0 10px ${AI_COLOR}33`,
+                            }
+                          : {
+                              color: "rgba(255,255,255,0.65)",
+                              borderColor: "rgba(255,255,255,0.1)",
+                              background: "rgba(255,255,255,0.04)",
+                            }
+                      }
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           )}

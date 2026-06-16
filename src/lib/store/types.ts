@@ -22,7 +22,7 @@ export const CaseStudySchema = z.object({
 export const ProjectSchema = z.object({
   slug: z.string().min(1),
   title: z.string().min(1),
-  category: z.enum(["personal", "onesignal", "onesignal-work"]),
+  category: z.enum(["personal", "onesignal"]),
   tags: z.array(z.string()),
   dateStart: z.string(),
   dateEnd: z.union([z.string(), z.literal("ongoing")]),

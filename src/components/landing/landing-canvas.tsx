@@ -15,14 +15,14 @@ import {
 import {
   MODEL_DANCE_URL,
   MODEL_IDLE_URL,
-  MODEL_ONESIGNAL_URL,
   MODEL_PERSONAL_DANCE_URL,
   MODEL_PERSONAL_RUN_URL,
   MODEL_PERSONAL_URL,
   MODEL_RUN_URL,
 } from "./avatar-model";
 import { BIO, LINKEDIN_URL, NAME, ROLE } from "./landing-data";
-import { MissionSelect, type MissionLaunch } from "./mission-select";
+import { MissionSwitch, type MissionLaunch } from "./mission-select";
+import type { Project } from "@/lib/store/types";
 
 // Total time the panel pan plays before we route to /orbit.
 const LAUNCH_MS = 1200;
@@ -166,11 +166,29 @@ export function LandingCanvas() {
     (next: "run" | "dance") => setPose((p) => (p === next ? "idle" : next)),
     []
   );
-  // Which mission card is hovered. Hovering "Personal AI Projects" swaps in a
-  // dedicated avatar; leaving the card reverts to the selected pose.
-  const [hoverMission, setHoverMission] = useState<string | null>(null);
-  const hoveringPersonal = hoverMission === "personal";
-  const hoveringOnesignal = hoverMission === "onesignal";
+  // Which mission segment is selected. Drives the launch target, the card flip,
+  // and (after a brief beat) which avatar is shown. Defaults to OneSignal.
+  const [selectedMission, setSelectedMission] =
+    useState<Project["category"]>("onesignal");
+  // The avatar model lags the selection slightly: on a switch the model spins
+  // up fast (via spinToken) and only swaps mid-spin, so it reads as "spin, then
+  // change" rather than an instant pop.
+  const [avatarMission, setAvatarMission] =
+    useState<Project["category"]>("onesignal");
+  const [spinToken, setSpinToken] = useState(0);
+  const firstMissionRef = useRef(true);
+  const isPersonal = avatarMission === "personal";
+
+  useEffect(() => {
+    if (firstMissionRef.current) {
+      firstMissionRef.current = false;
+      return;
+    }
+    // Kick the avatar into a fast spin, then swap the model mid-spin.
+    setSpinToken((t) => t + 1);
+    const id = setTimeout(() => setAvatarMission(selectedMission), 280);
+    return () => clearTimeout(id);
+  }, [selectedMission]);
   // Non-null while the pivot-to-orbit transition is playing.
   const [launch, setLaunch] = useState<MissionLaunch | null>(null);
   // True while the modal "pans back in" after returning from the orbit view.
@@ -367,7 +385,7 @@ export function LandingCanvas() {
         ref={panelRef}
         onPointerMove={handleMove}
         onPointerLeave={handleLeave}
-        className="relative z-10 my-auto w-full max-w-[60rem] shrink-0 transition-transform duration-200 ease-out [transform:perspective(1500px)] will-change-transform"
+        className="relative z-10 my-auto w-full max-w-[72rem] shrink-0 transition-transform duration-200 ease-out [transform:perspective(1500px)] will-change-transform"
       >
       {/* Chamfered accent frame — the same cut-corner treatment as the project
           showcase + design-system modals: the outer paints the glowing accent
@@ -465,49 +483,65 @@ export function LandingCanvas() {
         </div>
 
         {/* Body */}
-        <div className="px-6 py-5 sm:px-8">
-          {/* Top row: avatar · missions/toolkit · skills — the mission cards sit
-              in the center, the avatar on the left flank, scrolling skills right. */}
-          <div className="grid justify-center gap-5 md:grid-cols-[minmax(210px,240px)_minmax(0,260px)_minmax(0,260px)] md:items-stretch md:gap-7">
-          {/* Center: missions + toolkit */}
-          <div className="order-2 flex flex-col gap-5 md:order-2">
+        <div className="p-6 sm:p-8">
+          {/* Top row: avatar · missions/toolkit · skills. The center track is
+              kept wide enough that the segmented-control labels never wrap; the
+              avatar is pushed left and skills right to give it breathing room. */}
+          {/* Symmetric flanks (avatar | mission | profile) keep the mission
+              card dead-center in the modal; the avatar frame stays capped and
+              centered within its track. */}
+          <div className="grid justify-center gap-5 md:grid-cols-[minmax(260px,320px)_minmax(390px,430px)_minmax(260px,320px)] md:items-stretch md:gap-8">
+          {/* Center: mission panel, then the two animated tickers (toolkit +
+              skills) side by side below it. */}
+          <div className="order-2 flex flex-col gap-5 md:order-2 md:gap-8">
             <div>
               <Label>Select a mission</Label>
-              <MissionSelect onLaunch={handleLaunch} onHover={setHoverMission} />
+              <MissionSwitch
+                value={selectedMission}
+                onChange={setSelectedMission}
+                onLaunch={handleLaunch}
+              />
             </div>
-            <div>
-              <Label>Toolkit</Label>
-              <SkillScramble />
+            {/* Toolkit + skills: one labeled panel (label above the card, like
+                the other sections), split by a vertical divider. Never flips —
+                only the mission card does. */}
+            <div className="flex min-h-0 flex-1 flex-col">
+              <Label>Toolkit and Skills</Label>
+              <div className="grid min-h-0 flex-1 grid-cols-[0.9fr_1.1fr] gap-3 rounded-2xl border border-white/[0.06] bg-white/[0.015] p-3">
+                <div className="flex items-center justify-center text-center">
+                  <SkillScramble />
+                </div>
+                <div className="border-l border-white/[0.08] pl-3">
+                  <SkillsCredits />
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Left: avatar hologram */}
           <div className="order-1 flex flex-col md:order-1">
-            <Label>
-              <span className="block text-center">Avatar</span>
-            </Label>
+            <Label>Avatar</Label>
             <div
               onPointerDown={(e) => e.stopPropagation()}
               onPointerMove={(e) => e.stopPropagation()}
-              className="relative w-full max-w-[240px] flex-1 min-h-[260px] cursor-grab self-center overflow-hidden rounded-xl border border-[#5ee0c8]/20 bg-gradient-to-b from-white/[0.04] to-black/30 active:cursor-grabbing"
+              className="relative w-full flex-1 min-h-[260px] cursor-grab overflow-hidden rounded-2xl border border-[#5ee0c8]/20 bg-gradient-to-b from-white/[0.04] to-black/30 active:cursor-grabbing"
               style={{ boxShadow: "inset 0 0 30px rgba(94,224,200,0.08)" }}
             >
               <LandingScene
                 key={avatarNonce}
+                spinToken={spinToken}
                 modelUrl={
-                  hoveringPersonal
+                  isPersonal
                     ? pose === "run"
                       ? MODEL_PERSONAL_RUN_URL
                       : pose === "dance"
                         ? MODEL_PERSONAL_DANCE_URL
                         : MODEL_PERSONAL_URL
-                    : hoveringOnesignal
-                      ? MODEL_ONESIGNAL_URL
-                      : pose === "run"
-                        ? MODEL_RUN_URL
-                        : pose === "dance"
-                          ? MODEL_DANCE_URL
-                          : MODEL_IDLE_URL
+                    : pose === "run"
+                      ? MODEL_RUN_URL
+                      : pose === "dance"
+                        ? MODEL_DANCE_URL
+                        : MODEL_IDLE_URL
                 }
               />
 
@@ -620,22 +654,17 @@ export function LandingCanvas() {
             </div>
           </div>
 
-          {/* Right: skills */}
-          <div className="order-3 md:order-3">
-            <SkillsCredits />
-          </div>
-          </div>
-
-          {/* Profile — full width below */}
-          <div className="mt-6 border-t border-white/10 pt-5">
+          {/* Right: profile copy, carded to balance the avatar card opposite. */}
+          <div className="order-3 flex flex-col md:order-3">
             <Label>Profile</Label>
-            <div className="space-y-2.5 text-[13px] leading-relaxed text-white/70 sm:columns-2 sm:gap-8 sm:space-y-0 sm:[&>p]:mb-2.5">
-              {BIO.map((para, i) => (
-                <p key={i} className="break-inside-avoid">
-                  {para}
-                </p>
-              ))}
+            <div className="flex-1 rounded-2xl border border-white/[0.06] bg-white/[0.015] p-3">
+              <div className="space-y-3 text-[12.5px] leading-7 text-white/70">
+                {BIO.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
             </div>
+          </div>
           </div>
         </div>
 

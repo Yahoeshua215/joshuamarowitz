@@ -28,9 +28,8 @@ export function TimelineFilters({
         onChange={onCategoryChange}
         options={[
           { value: "all", label: "All" },
-          { value: "personal", label: "Personal" },
-          { value: "onesignal", label: "OneSignal AI" },
-          { value: "onesignal-work", label: "OneSignal Projects" },
+          { value: "onesignal", label: "OneSignal Projects" },
+          { value: "personal", label: "Josh Projects" },
         ]}
       />
 

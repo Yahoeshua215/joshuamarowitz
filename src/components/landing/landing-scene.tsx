@@ -8,11 +8,14 @@ import { AvatarModel } from "./avatar-model";
 export default function LandingScene({
   modelUrl,
   interactive = true,
+  spinToken = 0,
 }: {
   modelUrl: string;
   // When false (e.g. the small orbit "return" widget), the avatar just
   // auto-spins and pointer drag-to-rotate is disabled so clicks pass through.
   interactive?: boolean;
+  // Bump to trigger a fast spin burst on the avatar (mission flip).
+  spinToken?: number;
 }) {
   return (
     <Canvas
@@ -41,10 +44,10 @@ export default function LandingScene({
             azimuth={[-Infinity, Infinity]}
             damping={0.25}
           >
-            <AvatarModel url={modelUrl} />
+            <AvatarModel url={modelUrl} spinToken={spinToken} />
           </PresentationControls>
         ) : (
-          <AvatarModel url={modelUrl} />
+          <AvatarModel url={modelUrl} spinToken={spinToken} />
         )}
       </Suspense>
     </Canvas>

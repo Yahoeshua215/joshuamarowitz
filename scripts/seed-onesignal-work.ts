@@ -429,7 +429,7 @@ async function main() {
     const input: ProjectInput = {
       slug: seed.slug,
       title: seed.title,
-      category: "onesignal-work",
+      category: "onesignal",
       tags: seed.tags,
       dateStart,
       dateEnd,

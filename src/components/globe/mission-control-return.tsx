@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   MODEL_IDLE_URL,
-  MODEL_ONESIGNAL_URL,
   MODEL_PERSONAL_URL,
 } from "@/components/landing/avatar-model";
 import type { Project } from "@/lib/store/types";
@@ -13,12 +12,11 @@ import type { Project } from "@/lib/store/types";
 const ACCENT = "#5ee0c8";
 
 // The avatar shown in the corner for each focused section — mirrors the
-// per-card hover avatars on the landing screen. Releases has no dedicated
-// avatar, so it (and the all-sections view) falls back to the default idle.
+// landing avatars. OneSignal (and the all-sections view) uses the default
+// avatar; Personal uses the personal avatar.
 const AVATAR_BY_CATEGORY: Record<Project["category"], string> = {
   personal: MODEL_PERSONAL_URL,
-  onesignal: MODEL_ONESIGNAL_URL,
-  "onesignal-work": MODEL_IDLE_URL,
+  onesignal: MODEL_IDLE_URL,
 };
 
 const LandingScene = dynamic(

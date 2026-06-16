@@ -3,26 +3,28 @@ import { Project } from "@/lib/store/types";
 export type MissionCategory = {
   key: Project["category"];
   label: string;
+  // Short uppercase kicker (e.g. "AI · Prototyping · Releases").
   blurb: string;
+  // Fuller sentence shown inside the mission panel.
+  description: string;
 };
 
-// Maps the three landing entry points onto the existing satellite categories.
-// Order matches mission cards 01→03 on the HUD (Releases, OneSignal AI, Personal).
+// The two landing entry points, mapped onto the satellite categories. The
+// former "OneSignal AI" projects now live inside OneSignal, tagged "AI".
 export const MISSIONS: MissionCategory[] = [
   {
-    key: "onesignal-work",
-    label: "OneSignal Releases",
-    blurb: "Product design I've shipped across the platform.",
-  },
-  {
     key: "onesignal",
-    label: "OneSignal AI Projects",
-    blurb: "AI prototypes and tools I built for OneSignal.",
+    label: "OneSignal Projects",
+    blurb: "AI · Prototyping · Releases",
+    description:
+      "Production design and AI prototypes I've shipped at OneSignal, spanning push, journeys, dashboards, and the systems behind them.",
   },
   {
     key: "personal",
     label: "Personal AI Projects",
-    blurb: "Apps, games, and experiments I build for myself.",
+    blurb: "Games · Utilities · Experiments",
+    description:
+      "Playful apps, games, and weekend experiments I build for myself, most of them powered by a healthy dose of AI.",
   },
 ];
 

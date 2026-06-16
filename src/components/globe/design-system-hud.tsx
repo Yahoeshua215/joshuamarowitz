@@ -39,9 +39,9 @@ const CORE: Swatch[] = [
 
 // Mission section colors — kept in sync with the landing HUD card numbers.
 const SECTION: Swatch[] = [
-  { name: "Releases", value: "#f25f4c", note: "onesignal-work" },
-  { name: "OneSignal AI", value: "#f5c542", note: "onesignal" },
-  { name: "Personal", value: "#4f9dff", note: "personal" },
+  { name: "OneSignal", value: "#f25f4c", note: "onesignal" },
+  { name: "AI tag", value: "#f5c542", note: "ai sub-filter" },
+  { name: "Josh", value: "#4f9dff", note: "personal" },
   { name: "HUD accent", value: "#5ee0c8", note: "teal · chrome" },
   { name: "Space base", value: "#05070d", note: "night void" },
 ];

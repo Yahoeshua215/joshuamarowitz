@@ -565,6 +565,57 @@ details[open] .chevron {
   animation: scifi-reticle-spin 14s linear infinite;
 }
 
+/* Mini orbit marker on the mission segments — a satellite circling an orb,
+   a small preview of the orbit screen. */
+@keyframes mission-orb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mission-orb-spin {
+  animation: mission-orb-spin 7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-orb-spin {
+    animation: none;
+  }
+}
+
+/* Mission panel flip — selecting the other segment spins the whole card 180°
+   on its Y axis, revealing the other mission on the back face. The two faces
+   are grid-stacked so the card sizes to the taller one. */
+.mission-flip {
+  perspective: 1600px;
+}
+
+.mission-flip-inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mission-flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.mission-flip-face {
+  grid-area: 1 / 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.mission-flip-back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-flip-inner {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scifi-reticle {
     animation: none;

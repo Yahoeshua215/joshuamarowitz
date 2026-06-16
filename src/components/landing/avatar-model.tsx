@@ -22,10 +22,20 @@ const RESUME_DELAY_MS = 1500;
 // Loads a rigged GLB avatar, plays its baked animation, normalizes scale by
 // height so it fills the framed viewport regardless of pose, and slowly turns
 // it like a hologram on a turntable.
-export function AvatarModel({ url }: { url: string }) {
+export function AvatarModel({
+  url,
+  spinToken = 0,
+}: {
+  url: string;
+  // Bump to trigger a fast spin burst (e.g. when the mission selection flips).
+  spinToken?: number;
+}) {
   const spinRef = useRef<THREE.Group>(null);
   const draggingRef = useRef(false);
   const lastInteractRef = useRef(0);
+  // Extra angular velocity (rad/s) that decays back to the idle turntable speed.
+  const boostRef = useRef(0);
+  const firstSpinRef = useRef(true);
   const gl = useThree((state) => state.gl);
   const { scene, animations } = useGLTF(url);
 
@@ -110,12 +120,33 @@ export function AvatarModel({ url }: { url: string }) {
     };
   }, [gl]);
 
+  // A changing spinToken kicks off a fast spin burst (skip the initial mount).
+  useEffect(() => {
+    if (firstSpinRef.current) {
+      firstSpinRef.current = false;
+      return;
+    }
+    boostRef.current = 55; // rad/s — ~2 quick revolutions before it settles
+  }, [spinToken]);
+
+  // Whenever the model itself swaps, snap the turntable back to front and clear
+  // any spin momentum so the new avatar always arrives in the front-facing pose.
+  useEffect(() => {
+    if (spinRef.current) spinRef.current.rotation.y = 0;
+    boostRef.current = 0;
+  }, [url]);
+
   useFrame((_, delta) => {
     if (!spinRef.current) return;
     const idle =
       !draggingRef.current &&
       performance.now() - lastInteractRef.current > RESUME_DELAY_MS;
     if (idle) spinRef.current.rotation.y += delta * 0.35;
+    // Fast spin burst, decaying exponentially back to the idle turntable.
+    if (boostRef.current > 0.01) {
+      spinRef.current.rotation.y += delta * boostRef.current;
+      boostRef.current *= Math.exp(-delta * 4.5);
+    }
   });
 
   return (

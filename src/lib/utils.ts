@@ -3,9 +3,8 @@ import { Project } from "./store/types";
 export type CategoryFilter = "all" | Project["category"];
 
 export const CATEGORY_LABELS: Record<Project["category"], string> = {
-  personal: "Personal",
-  onesignal: "OneSignal AI",
-  "onesignal-work": "OneSignal Projects",
+  personal: "Personal AI Projects",
+  onesignal: "OneSignal Projects",
 };
 
 export function categoryLabel(category: Project["category"]): string {

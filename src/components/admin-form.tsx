@@ -155,9 +155,8 @@ export function AdminForm({ initial }: AdminFormProps) {
               update("category", e.target.value as Project["category"])
             }
           >
-            <option value="personal">Personal</option>
-            <option value="onesignal">OneSignal AI</option>
-            <option value="onesignal-work">OneSignal Projects</option>
+            <option value="onesignal">OneSignal Projects</option>
+            <option value="personal">Josh Projects</option>
           </select>
         </Field>
         <Field label="Status">
